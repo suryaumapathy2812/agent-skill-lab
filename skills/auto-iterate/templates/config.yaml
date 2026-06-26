@@ -1,0 +1,60 @@
+# Auto-Iterate Configuration Template
+# Copy this to .auto-iterate/config.yaml and fill in your values
+
+task:
+  name: "my-optimization"
+  description: "What we're trying to achieve"
+  domain: "general"  # code | prompt | config | algorithm | general
+
+source:
+  files:
+    - path: "input.txt"
+      description: "The file to optimize"
+      mutable: true
+    - path: "test.py"
+      description: "Test cases (read-only)"
+      mutable: false
+  context: |
+    Additional context about the task, domain, and constraints.
+    What does good look like? What are common pitfalls?
+
+constraints:
+  can:
+    - "Modify input.txt only"
+    - "Run test.py to verify changes"
+  cannot:
+    - "Install new packages"
+    - "Modify test.py"
+    - "Change the evaluation script"
+
+experiment:
+  budget:
+    type: time              # time | tokens | custom
+    limit: 300              # seconds for time, token count for tokens
+    timeout_multiplier: 2   # kill if runtime > budget * this
+
+evaluate:
+  method: llm               # llm | shell | hybrid
+  direction: higher         # higher = higher is better, lower = lower is better
+  criteria:
+    - name: "correctness"
+      weight: 0.4
+      description: "Does the output work correctly?"
+      check: "Verify the output produces the expected result"
+    - name: "quality"
+      weight: 0.3
+      description: "How clean and maintainable is the result?"
+      check: "Review for clarity, structure, and best practices"
+    - name: "completeness"
+      weight: 0.3
+      description: "Does it handle edge cases and requirements?"
+      check: "Check for edge case handling and full requirement coverage"
+  # Uncomment for shell evaluation:
+  # script: "evaluate.sh"
+  # metric: "score"  # key in script JSON output
+
+loop:
+  max_iterations: 50
+  improvement_threshold: 0.01  # minimum change to count as improvement
+  patience: 5                  # stop after N runs with no improvement
+  target_score: null           # stop when score exceeds this (optional)

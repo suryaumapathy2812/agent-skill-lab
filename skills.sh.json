@@ -9,6 +9,13 @@
         "modern-design",
         "ai-design"
       ]
+    },
+    {
+      "title": "Auto-Iterate",
+      "description": "Autonomous iteration and benchmarking toolkit. Set up experiment workspaces, define evaluation criteria, and run optimization loops.",
+      "skills": [
+        "auto-iterate"
+      ]
     }
   ]
 }
