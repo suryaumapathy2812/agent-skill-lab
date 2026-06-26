@@ -28,16 +28,63 @@ docs/         Project documentation
 
 - `auto-iterator`: Autonomous iteration agent. Runs experiments, evaluates, keeps/discards. Use with the `auto-iterate` skill.
 
-## auto-iterate
+## Installation
 
-A general-purpose autonomous iteration framework. Define what to optimize, how to measure it, and let the agent loop forever.
+### Install All Skills
 
-### Installation
+```bash
+npx skills add suryaumapathy/agent-skill-lab
+```
+
+### Install Individual Skills Locally
+
+Use these commands when working from a local clone and you only want one skill.
+
+**OpenCode:**
+
+`auto-iterate`
+```bash
+mkdir -p ~/.config/opencode/skills/auto-iterate
+cp -R skills/auto-iterate/* ~/.config/opencode/skills/auto-iterate/
+```
+
+`modern-design`
+```bash
+mkdir -p ~/.config/opencode/skills/modern-design
+cp -R skills/modern-design/* ~/.config/opencode/skills/modern-design/
+```
+
+`ai-design`
+```bash
+mkdir -p ~/.config/opencode/skills/ai-design
+cp -R skills/ai-design/* ~/.config/opencode/skills/ai-design/
+```
+
+**Claude Code:**
+
+`auto-iterate`
+```bash
+mkdir -p ~/.claude/skills/auto-iterate
+cp -R skills/auto-iterate/* ~/.claude/skills/auto-iterate/
+```
+
+`modern-design`
+```bash
+mkdir -p ~/.claude/skills/modern-design
+cp -R skills/modern-design/* ~/.claude/skills/modern-design/
+```
+
+`ai-design`
+```bash
+mkdir -p ~/.claude/skills/ai-design
+cp -R skills/ai-design/* ~/.claude/skills/ai-design/
+```
+
+### Install Agents
 
 **OpenCode:**
 ```bash
-npx skills add suryaumapathy/agent-skill-lab
-# Then copy the agent:
+mkdir -p ~/.config/opencode/agents
 cp agents/auto-iterator.md ~/.config/opencode/agents/
 ```
 
@@ -45,6 +92,10 @@ cp agents/auto-iterator.md ~/.config/opencode/agents/
 ```bash
 cp AGENTS.md /path/to/your/project/
 ```
+
+## auto-iterate
+
+A general-purpose autonomous iteration framework. Define what to optimize, how to measure it, and let the agent loop forever.
 
 ### Usage
 
