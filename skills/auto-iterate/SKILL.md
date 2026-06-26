@@ -299,11 +299,9 @@ Show the user:
 
 Tell the user:
 
-> "Workspace ready at `.auto-iterate/`. To start the autonomous loop, invoke the auto-iterator agent."
+> "Workspace ready at `.auto-iterate/`. To start the autonomous loop in OpenCode, invoke the auto-iterator agent."
 
-If using OpenCode: `@auto-iterator start the loop`
-
-If using Claude Code / Codex / Cursor: the AGENTS.md file at the project root contains the agent instructions. The AI tool will follow them automatically.
+Use: `@auto-iterator start the loop`
 
 ## Simplicity Criterion
 

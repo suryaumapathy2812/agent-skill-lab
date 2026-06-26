@@ -14,6 +14,10 @@ Skill names should be lowercase and hyphen-separated.
 
 Agent definitions will live in `agents/`. Keep one agent per markdown file unless an agent requires supporting reference files.
 
+## Commands
+
+OpenCode slash command definitions live in `commands/`. Keep one command per markdown file and use `$ARGUMENTS` for user input.
+
 ## Reports
 
 Use `reports/skills-and-agents-report.md` as the single inventory and summary report for the repository.
@@ -26,6 +30,7 @@ References are intentionally chunked so agents can load only relevant context.
 references/products/        Product-specific research notes
 references/modern-design/   Modern UI/component polish references
 references/ai-design/       AI workspace/product architecture references
+skills/modern-design/references/ OpenCode Design Engineer constraint references
 ```
 
 Prefer adding a focused markdown file over expanding a skill into one very large file.

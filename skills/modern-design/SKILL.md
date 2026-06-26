@@ -1,6 +1,6 @@
 ---
 name: modern-design
-description: Premium product UI design system for React, Next.js, Tailwind, shadcn/ui. Covers design philosophy, concrete tokens, layout architecture, typography, surfaces, motion, components, and anti-patterns. Use when building, improving, or reviewing any product UI to reach the quality level of Linear, Resend, Dub, Campsite, and Attio.
+description: OpenCode-first premium product UI design system and Design Engineer workflow for React, Next.js, Tailwind, shadcn/ui. Use with the bundled design-engineer agents and /design-* commands when building, improving, or reviewing product UI to reach the quality level of Linear, Resend, Dub, Campsite, and Attio.
 license: MIT
 ---
 
@@ -18,11 +18,23 @@ license: MIT
 
 Use this skill when building new UIs or refining existing ones to achieve a high-quality, modern SaaS aesthetic.
 
+## OpenCode Bundle Status
+
+This skill is currently designed and tested as part of the OpenCode Design Engineer bundle:
+
+- `agents/design-engineer.md`
+- `agents/design-researcher.md`
+- `agents/ux-architect.md`
+- `agents/design-critic.md`
+- `commands/design-*.md`
+
+The skill, agents, commands, templates, and references are intended to be installed together. Standalone use of `modern-design` without the OpenCode agents is not the primary supported path yet.
+
 ## DESIGN.md Resolution
 
 - `DESIGN.md` is the canonical source of truth for design tokens in any project.
 - If `DESIGN.md` exists at the project root, read it before generating any UI. All code must reference its tokens.
-- If `DESIGN.md` is absent, run `/design-init` to create one before building.
+- If `DESIGN.md` is absent, use the bundled OpenCode `/design-init` command to create one before building.
 - Never rewrite `DESIGN.md` without logging a token-update decision to `.design-engineer/decisions/`.
 
 ## The Absolute Laws
@@ -48,14 +60,14 @@ Use this skill when building new UIs or refining existing ones to achieve a high
 | `references/components.md` | Building specific components | Sidebar, table, list, card, badge, empty state |
 | `references/anti-patterns.md` | Reviewing or debugging generic UI | Wrong→right code examples |
 
-- `references/products/*.md`: For product-specific inspiration.
-- `references/modern-design/component-decision-matrix.md`: For choosing primitives.
-- `references/modern-design/rail-model.md`: For performance/interaction model.
+- `references/products/*.md`: Product-specific inspiration, copied into the installed OpenCode skill bundle.
+- `references/modern-design/component-decision-matrix.md`: Supplementary primitive selection guidance, copied into the installed OpenCode skill bundle.
+- `references/modern-design/rail-model.md`: Supplementary performance/interaction model, copied into the installed OpenCode skill bundle.
 
 ## Workflow
 
 1. **Understand:** Read the requirements and data model.
-2. **Setup:** Ensure `DESIGN.md` exists or run `/design-init`.
+2. **Setup:** Ensure `DESIGN.md` exists or run the OpenCode `/design-init` command.
 3. **Research:** Read relevant product references and extract patterns.
 4. **Architect:** Plan information hierarchy and progressive disclosure.
 5. **Layout:** Define max-width and spacing rhythm.

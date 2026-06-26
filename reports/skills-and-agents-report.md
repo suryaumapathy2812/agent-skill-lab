@@ -6,7 +6,7 @@ This report is the single inventory for all skills and agents in this repository
 
 ### modern-design
 
-Purpose: Premium product UI design system for React, Next.js, Tailwind, shadcn/ui. Covers design philosophy, concrete tokens, layout architecture, typography, surfaces, motion, components, and anti-patterns. 
+Purpose: OpenCode-first premium product UI design system and Design Engineer workflow for React, Next.js, Tailwind, shadcn/ui. Covers design philosophy, concrete tokens, layout architecture, typography, surfaces, motion, components, and anti-patterns.
 
 Core focus:
 
@@ -14,6 +14,7 @@ Core focus:
 - Provides concrete, copy-paste ready design tokens (oklch, spacing scales, type scales).
 - Defines hard rules (LLM behavior overrides) to prevent generic SaaS output.
 - Employs a multi-file reference architecture so agents only load the context they need.
+- Ships with OpenCode agents and `/design-*` commands; standalone use is not the primary supported path yet.
 
 Primary file: `skills/modern-design/SKILL.md`
 
@@ -52,7 +53,7 @@ Focused references:
 Autonomous iteration agent. Runs experiments, evaluates, keeps/discards. Use with the `auto-iterate` skill.
 
 ### design-engineer
-Lead agent for premium UI design. Orchestrates sub-agents, implements code, and makes final design decisions. Logs every decision. Uses slash commands (`/design-init`, `/design-build`, etc.) to run the workflow.
+OpenCode lead agent for premium UI design. Orchestrates sub-agents, implements code, and makes final design decisions. Logs every decision. Uses slash commands (`/design-init`, `/design-build`, etc.) to run the workflow.
 
 ### design-researcher
 Sub-agent. Studies reference products from `references/products/` and extracts relevant patterns for a specific UI surface. Returns focused, actionable briefs.
@@ -62,6 +63,17 @@ Sub-agent. Plans information architecture and progressive disclosure (what's vis
 
 ### design-critic
 Sub-agent. The quality gate. Reviews implementations against the `modern-design` skill's hard rules and anti-patterns. Scores output and demands fixes.
+
+## Commands
+
+OpenCode command definitions live in `commands/`:
+
+- `/design-init`: Creates root `DESIGN.md` and `.design-engineer/` decision/brief folders.
+- `/design-build`: Runs research, UX architecture, build, critique, and refinement.
+- `/design-research`: Creates a focused pattern brief.
+- `/design-arch`: Creates a UX architecture plan.
+- `/design-critique`: Reviews an implementation against `DESIGN.md` and `modern-design` rules.
+- `/design-log`: Summarizes `.design-engineer/decisions/`.
 
 ## Product Design Research Summary
 

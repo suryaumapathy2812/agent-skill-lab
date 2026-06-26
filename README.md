@@ -13,6 +13,7 @@ skills/<skill-name>/SKILL.md
 ```txt
 skills/       Independent skills, each with its own SKILL.md
 agents/       Agent definitions and subagent prompts
+commands/     OpenCode slash command prompts
 reports/      Single reports and inventories for skills/agents
 references/   Supporting research and design notes
 docs/         Project documentation
@@ -36,7 +37,9 @@ docs/         Project documentation
 
 ## The Design Engineer System
 
-The Design Engineer system uses a multi-agent architecture to produce premium UI (inspired by Linear, Resend, Campsite). 
+The Design Engineer system is currently OpenCode-only. It uses a multi-agent architecture to produce premium UI inspired by Linear, Resend, Campsite, and Attio.
+
+`modern-design` is not treated as an independent standalone skill yet. Install it together with the bundled Design Engineer agents and `/design-*` commands.
 
 ### Features
 
@@ -56,6 +59,8 @@ When talking to the `design-engineer`, use these commands:
 
 ## Installation
 
+OpenCode is the only supported runtime for this repository right now.
+
 ### Install All Skills
 
 ```bash
@@ -65,8 +70,6 @@ npx skills add suryaumapathy/agent-skill-lab
 ### Install Individual Skills Locally
 
 Use these commands when working from a local clone and you only want one skill.
-
-**OpenCode:**
 
 `auto-iterate`
 ```bash
@@ -78,6 +81,17 @@ cp -R skills/auto-iterate/* ~/.config/opencode/skills/auto-iterate/
 ```bash
 mkdir -p ~/.config/opencode/skills/modern-design
 cp -R skills/modern-design/* ~/.config/opencode/skills/modern-design/
+cp -R references/products ~/.config/opencode/skills/modern-design/references/
+cp -R references/modern-design ~/.config/opencode/skills/modern-design/references/
+```
+
+Install the bundled Design Engineer agents and commands with `modern-design`:
+
+```bash
+mkdir -p ~/.config/opencode/agents ~/.config/opencode/commands
+cp agents/design-*.md ~/.config/opencode/agents/
+cp agents/ux-architect.md ~/.config/opencode/agents/
+cp commands/design-*.md ~/.config/opencode/commands/
 ```
 
 `ai-design`
@@ -86,38 +100,21 @@ mkdir -p ~/.config/opencode/skills/ai-design
 cp -R skills/ai-design/* ~/.config/opencode/skills/ai-design/
 ```
 
-**Claude Code:**
-
-`auto-iterate`
-```bash
-mkdir -p ~/.claude/skills/auto-iterate
-cp -R skills/auto-iterate/* ~/.claude/skills/auto-iterate/
-```
-
-`modern-design`
-```bash
-mkdir -p ~/.claude/skills/modern-design
-cp -R skills/modern-design/* ~/.claude/skills/modern-design/
-```
-
-`ai-design`
-```bash
-mkdir -p ~/.claude/skills/ai-design
-cp -R skills/ai-design/* ~/.claude/skills/ai-design/
-```
-
 ### Install Agents
 
-**OpenCode:**
 ```bash
 mkdir -p ~/.config/opencode/agents
 cp agents/*.md ~/.config/opencode/agents/
 ```
 
-**Claude Code / Codex / Cursor:**
+### Install Commands
+
 ```bash
-cp AGENTS.md /path/to/your/project/
+mkdir -p ~/.config/opencode/commands
+cp commands/*.md ~/.config/opencode/commands/
 ```
+
+Restart OpenCode after installing skills, agents, or commands.
 
 ## auto-iterate
 
