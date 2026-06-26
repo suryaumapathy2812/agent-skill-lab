@@ -1,0 +1,128 @@
+---
+name: {{PROJECT_NAME}}
+description: {{PROJECT_DESCRIPTION}}
+colors:
+  background: "{{COLOR_BACKGROUND}}"
+  surface: "{{COLOR_SURFACE}}"
+  surface-raised: "{{COLOR_SURFACE_RAISED}}"
+  surface-overlay: "{{COLOR_SURFACE_OVERLAY}}"
+  border-subtle: "{{COLOR_BORDER_SUBTLE}}"
+  border-default: "{{COLOR_BORDER_DEFAULT}}"
+  foreground: "{{COLOR_FOREGROUND}}"
+  foreground-muted: "{{COLOR_FOREGROUND_MUTED}}"
+  foreground-faint: "{{COLOR_FOREGROUND_FAINT}}"
+  primary: "{{COLOR_PRIMARY}}"
+  primary-surface: "{{COLOR_PRIMARY_SURFACE}}"
+  destructive: "{{COLOR_DESTRUCTIVE}}"
+  destructive-surface: "{{COLOR_DESTRUCTIVE_SURFACE}}"
+  success: "{{COLOR_SUCCESS}}"
+  success-surface: "{{COLOR_SUCCESS_SURFACE}}"
+  warning: "{{COLOR_WARNING}}"
+  warning-surface: "{{COLOR_WARNING_SURFACE}}"
+typography:
+  display:
+    fontFamily: {{FONT_SANS}}
+    fontSize: {{DISPLAY_SIZE}}
+    fontWeight: 600
+    lineHeight: 1.15
+    letterSpacing: -0.02em
+  title:
+    fontFamily: {{FONT_SANS}}
+    fontSize: {{TITLE_SIZE}}
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: -0.01em
+  heading:
+    fontFamily: {{FONT_SANS}}
+    fontSize: 14px
+    fontWeight: 600
+    lineHeight: 1.4
+  body:
+    fontFamily: {{FONT_SANS}}
+    fontSize: {{BODY_SIZE}}
+    fontWeight: 400
+    lineHeight: 1.5
+  label:
+    fontFamily: {{FONT_SANS}}
+    fontSize: 12px
+    fontWeight: 500
+    lineHeight: 1.3
+    letterSpacing: 0.04em
+  caption:
+    fontFamily: {{FONT_SANS}}
+    fontSize: 11px
+    fontWeight: 500
+    lineHeight: 1.3
+  mono:
+    fontFamily: {{FONT_MONO}}
+    fontSize: 13px
+    fontWeight: 400
+    lineHeight: 1.5
+    fontFeature: "tnum"
+rounded:
+  sm: {{RADIUS_SM}}
+  md: {{RADIUS_MD}}
+  lg: {{RADIUS_LG}}
+  full: 9999px
+spacing:
+  xs: 4px
+  sm: 8px
+  md: 16px
+  lg: 24px
+  xl: 40px
+  2xl: 64px
+components:
+  content-area:
+    maxWidth: {{CONTENT_MAX_WIDTH}}
+    padding: "{spacing.xl}"
+  sidebar:
+    width: {{SIDEBAR_WIDTH}}
+    backgroundColor: "{colors.background}"
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.background}"
+    rounded: "{rounded.sm}"
+    height: {{BUTTON_HEIGHT}}
+    padding: 14px
+  button-ghost:
+    backgroundColor: transparent
+    textColor: "{colors.foreground-muted}"
+    rounded: "{rounded.sm}"
+    height: {{BUTTON_HEIGHT}}
+  badge-default:
+    backgroundColor: "{colors.surface-raised}"
+    textColor: "{colors.foreground-muted}"
+    rounded: "{rounded.sm}"
+    padding: 8px
+    height: 22px
+---
+
+## Overview
+
+{{PRODUCT_CHARACTER}}
+
+Reference products: {{REFERENCE_PRODUCTS}}.
+
+## Colors
+
+{{COLOR_RATIONALE}}
+
+## Typography
+
+{{TYPOGRAPHY_RATIONALE}}
+
+## Layout
+
+{{LAYOUT_RATIONALE}}
+
+## Elevation & Depth
+
+{{DEPTH_RATIONALE}}
+
+## Components
+
+{{COMPONENT_RATIONALE}}
+
+## Do's and Don'ts
+
+{{DOS_AND_DONTS}}

@@ -6,27 +6,27 @@ This report is the single inventory for all skills and agents in this repository
 
 ### modern-design
 
-Purpose: premium product UI polish for React, Next.js, Tailwind, shadcn/ui, dashboards, SaaS apps, forms, cards, tables, charts, dark mode, and component refinement.
+Purpose: Premium product UI design system for React, Next.js, Tailwind, shadcn/ui. Covers design philosophy, concrete tokens, layout architecture, typography, surfaces, motion, components, and anti-patterns. 
 
 Core focus:
 
-- Improve shadcn-style components without fighting the design system.
-- Use subtle borders, disciplined shadows, tighter typography, better density, and semantic color.
-- Choose the right primitive: list, table, matrix, card, drawer, command palette, or page.
-- Prefer list/item views over tables when records need custom hierarchy, preview, identity, or mobile-friendly scanning.
-- Apply RAIL thinking to response, animation, idle, and load behavior.
-- Make dashboards, tables, forms, and SaaS pages feel closer to Linear, Resend, Dub, OpenStatus, Langfuse, Campsite, Basedash, and Reflect.
+- Built around a philosophy of subtraction, restraint, and intentional negative space.
+- Provides concrete, copy-paste ready design tokens (oklch, spacing scales, type scales).
+- Defines hard rules (LLM behavior overrides) to prevent generic SaaS output.
+- Employs a multi-file reference architecture so agents only load the context they need.
 
 Primary file: `skills/modern-design/SKILL.md`
 
 Focused references:
 
-- `references/modern-design/component-decision-matrix.md`
-- `references/modern-design/component-recipes.md`
-- `references/modern-design/depth-surfaces-shadows.md`
-- `references/modern-design/whitespace-density.md`
-- `references/modern-design/rail-model.md`
-- `references/modern-design/anti-patterns.md`
+- `skills/modern-design/references/hard-rules.md`
+- `skills/modern-design/references/design-tokens.md`
+- `skills/modern-design/references/layout.md`
+- `skills/modern-design/references/typography.md`
+- `skills/modern-design/references/surfaces.md`
+- `skills/modern-design/references/motion.md`
+- `skills/modern-design/references/components.md`
+- `skills/modern-design/references/anti-patterns.md`
 
 ### ai-design
 
@@ -48,7 +48,20 @@ Focused references:
 
 ## Agents
 
-No custom agents have been added yet.
+### auto-iterator
+Autonomous iteration agent. Runs experiments, evaluates, keeps/discards. Use with the `auto-iterate` skill.
+
+### design-engineer
+Lead agent for premium UI design. Orchestrates sub-agents, implements code, and makes final design decisions. Logs every decision. Uses slash commands (`/design-init`, `/design-build`, etc.) to run the workflow.
+
+### design-researcher
+Sub-agent. Studies reference products from `references/products/` and extracts relevant patterns for a specific UI surface. Returns focused, actionable briefs.
+
+### ux-architect
+Sub-agent. Plans information architecture and progressive disclosure (what's visible vs hidden on hover/click) before any styling happens. 
+
+### design-critic
+Sub-agent. The quality gate. Reviews implementations against the `modern-design` skill's hard rules and anti-patterns. Scores output and demands fixes.
 
 ## Product Design Research Summary
 
@@ -123,14 +136,11 @@ These files capture UI patterns, layout decisions, component polish, and product
 
 ### Modern Design Chunks
 
-`references/modern-design/` contains focused decision and implementation files:
+The `modern-design` skill uses an internal `references/` folder for absolute rules, tokens, and code examples.
 
+Supplementary files live in `references/modern-design/`:
 - Component choice and list-vs-table decisions.
-- Component recipes.
-- Depth, surface, border, and shadow guidance.
-- Whitespace and density guidance.
 - RAIL performance model.
-- Anti-patterns.
 
 ### AI Design Chunks
 

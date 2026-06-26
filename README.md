@@ -21,12 +21,38 @@ docs/         Project documentation
 ## Current Skills
 
 - `auto-iterate`: Autonomous iteration and benchmarking toolkit. Inspired by karpathy/autoresearcher.
-- `modern-design`: Premium shadcn/Tailwind/SaaS component polish.
+- `modern-design`: Premium product UI design system. Defines concrete tokens, layout architecture, typography, and motion for React/Tailwind/shadcn.
 - `ai-design`: AI workspace product design and AI-native product architecture.
 
 ## Current Agents
 
 - `auto-iterator`: Autonomous iteration agent. Runs experiments, evaluates, keeps/discards. Use with the `auto-iterate` skill.
+
+**Design Engineer System (Multi-Agent Team):**
+- `design-engineer`: Lead agent. Orchestrates sub-agents, builds UI, logs decisions.
+- `design-researcher`: Sub-agent. Studies reference products, returns pattern briefs.
+- `ux-architect`: Sub-agent. Plans information hierarchy and progressive disclosure.
+- `design-critic`: Sub-agent. Quality gate. Scores implementations against anti-patterns.
+
+## The Design Engineer System
+
+The Design Engineer system uses a multi-agent architecture to produce premium UI (inspired by Linear, Resend, Campsite). 
+
+### Features
+
+1. **Multi-Agent Orchestration**: A lead engineer coordinates a researcher, an architect, and a critic to ensure no step (research, planning, critique) is skipped.
+2. **DESIGN.md**: Uses a canonical design specification file (following [google-labs-code/design.md](https://github.com/google-labs-code/design.md)) to define tokens before any code is written.
+3. **Decision Log**: An append-only log in `.design-engineer/decisions/` tracks every design choice, the reasoning, and rejected alternatives.
+
+### Slash Commands
+
+When talking to the `design-engineer`, use these commands:
+- `/design-init`: Start a new project. Generates `DESIGN.md` and the `.design-engineer/` log folder.
+- `/design-build [surface]`: The main command. Runs the full pipeline (research → arch → build → critique → refine).
+- `/design-research`: Standalone research step.
+- `/design-arch`: Standalone UX planning step.
+- `/design-critique`: Standalone code review step.
+- `/design-log`: Read the project's decision history.
 
 ## Installation
 
@@ -85,7 +111,7 @@ cp -R skills/ai-design/* ~/.claude/skills/ai-design/
 **OpenCode:**
 ```bash
 mkdir -p ~/.config/opencode/agents
-cp agents/auto-iterator.md ~/.config/opencode/agents/
+cp agents/*.md ~/.config/opencode/agents/
 ```
 
 **Claude Code / Codex / Cursor:**
@@ -120,5 +146,6 @@ The root `skills.sh.json` groups skills for the skills.sh repository page. It do
 Large design knowledge is split into focused markdown files under `references/` so an agent can load only the needed context:
 
 - `references/products/`: product-specific UI research.
-- `references/modern-design/`: component decisions, RAIL, anti-patterns, spacing, depth, recipes.
+- `skills/modern-design/references/`: The core constraint layer for the `modern-design` skill (hard rules, tokens, layout, typography).
+- `references/modern-design/`: Supplementary depth files (decision matrix, RAIL).
 - `references/ai-design/`: AI workspace blueprints and product architecture patterns.

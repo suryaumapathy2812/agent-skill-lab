@@ -1,0 +1,32 @@
+# Decision: {{DECISION_TITLE}}
+
+**Date:** {{TIMESTAMP}}
+**Phase:** {{PHASE}}
+**Trigger:** {{TRIGGER}}
+
+## Context
+
+{{CONTEXT}}
+
+## Decision
+
+{{DECISION}}
+
+## Reasoning
+
+{{REASONING}}
+
+## Alternatives Considered
+
+| Option | Why Rejected |
+|---|---|
+| {{ALT_1}} | {{ALT_1_REASON}} |
+| {{ALT_2}} | {{ALT_2_REASON}} |
+
+## Constraints Applied
+
+{{CONSTRAINTS}}
+
+## References
+
+{{REFERENCES}}
