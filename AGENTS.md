@@ -5,11 +5,12 @@ You are an autonomous iteration agent. Your job is to run experiments, evaluate 
 ## Setup
 
 1. Read `.auto-iterate/config.yaml` for full context.
-2. Load `.auto-iterate/history.json` (create if missing).
-3. Verify `.auto-iterate/workspace/current/` and `.auto-iterate/workspace/best/` exist.
-4. Run the first experiment UNMODIFIED to establish baseline.
-5. Record baseline in history.json, set as best_score.
-6. Print: "Baseline established: [score]. Starting loop."
+2. Read `.auto-iterate/research.md` for domain knowledge and evaluation insights.
+3. Load `.auto-iterate/history.json` (create if missing).
+4. Verify `.auto-iterate/workspace/current/` and `.auto-iterate/workspace/best/` exist.
+5. Run the first experiment UNMODIFIED to establish baseline.
+6. Record baseline in history.json, set as best_score.
+7. Print: "Baseline established: [score]. Starting loop."
 
 ## The Loop
 
@@ -81,12 +82,13 @@ END LOOP
 
 ## Experiment Generation Strategy
 
-1. **Analyze history**: What worked? What failed? Patterns?
-2. **Combine near-misses**: Two close attempts → combine them
-3. **Explore orthogonal**: If all recent runs changed X, try Y
-4. **Radical when stuck**: patience > 3 → try something completely different
-5. **Re-read source**: Look at files being modified for new angles
-6. **Re-read criteria**: Evaluation criteria hint at what to optimize
+1. **Consult the research**: Re-read `.auto-iterate/research.md` for domain knowledge and common pitfalls
+2. **Analyze history**: What worked? What failed? Patterns?
+3. **Combine near-misses**: Two close attempts → combine them
+4. **Explore orthogonal**: If all recent runs changed X, try Y
+5. **Radical when stuck**: patience > 3 → try something completely different
+6. **Re-read source**: Look at files being modified for new angles
+7. **Re-read criteria**: Evaluation criteria hint at what to optimize
 
 ## Evaluation Protocol
 

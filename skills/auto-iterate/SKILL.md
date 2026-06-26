@@ -32,7 +32,7 @@ Use this skill when the user wants to:
 The skill creates a workspace, then hands off to an agent that runs the loop:
 
 ```
-User describes task → Skill asks questions → Skill creates workspace → Agent loops forever
+User describes task → Skill asks questions → Skill researches → Skill designs criteria → Skill creates workspace → Agent loops forever
 ```
 
 ## Phase 1: Intent Capture
@@ -99,9 +99,117 @@ Typical answers:
 - "When the score reaches 0.95"
 - "When I wake up" (= max iterations of ~100)
 
-## Phase 2: Metric Design
+## Phase 2: Research
 
-Based on the answers, design the evaluation system.
+After gathering requirements, do targeted research before designing criteria. This makes the evaluation factors grounded in reality, not generic defaults.
+
+### Step 1: Read the Source Files
+
+Read every file the user identified. Understand:
+- What does this code/prompt/config actually do?
+- What are the key functions, sections, or parameters?
+- What's the current structure and approach?
+
+### Step 2: Identify the Domain
+
+Classify the task into one of these domains (or a combination):
+
+| Domain | Signal Words | Research Focus |
+|--------|-------------|----------------|
+| Code optimization | slow, performance, speed, memory, fast | Bottlenecks, algorithmic complexity, profiling data |
+| Prompt engineering | prompt, generate, output, LLM, response | Prompt patterns, chain-of-shot techniques, evaluation methods |
+| Config tuning | config, settings, parameters, hyperparameter | Documentation, recommended ranges, parameter interactions |
+| Algorithm selection | algorithm, approach, method, compare | Complexity analysis, benchmark data, tradeoffs |
+| Code quality | clean, refactor, readable, maintainable | Style guides, SOLID principles, common patterns |
+| General | optimize, improve, better, best | Domain-specific literature and examples |
+
+### Step 3: Search for Domain Knowledge
+
+Based on the domain, research:
+
+**For code optimization:**
+- What are common bottlenecks in this type of code?
+- What profiling techniques apply?
+- What are known optimization patterns for this language/framework?
+
+**For prompt engineering:**
+- What prompt engineering techniques exist for this task?
+- What makes a prompt effective vs ineffective?
+- What are common failure modes?
+
+**For config tuning:**
+- What does the documentation say about each parameter?
+- What are recommended ranges or starting points?
+- Which parameters interact with each other?
+
+**For algorithm selection:**
+- What are the known approaches to this problem?
+- What are their time/space complexity tradeoffs?
+- What benchmarks exist?
+
+**For code quality:**
+- What style guides or conventions apply?
+- What are common anti-patterns in this domain?
+- What does "clean code" look like for this language?
+
+Use web search, documentation, and your training knowledge.
+
+### Step 4: Analyze the Current State
+
+If possible, run the code/prompt/config to establish a baseline:
+- What's the current output or behavior?
+- What are the current metrics (execution time, accuracy, etc.)?
+- What's obviously wrong or suboptimal?
+
+If running isn't possible (e.g., needs dependencies, GPU, etc.), skip this step and note it.
+
+### Step 5: Synthesize Findings
+
+Write a brief research summary (3-5 bullet points):
+- Key findings about the domain
+- What "good" looks like for this task
+- Common pitfalls to avoid
+- Recommended evaluation dimensions
+
+This summary feeds directly into Phase 3 (Metric Design) — the criteria you propose should be informed by this research, not generic defaults.
+
+### Research Output Format
+
+Save the research summary to `.auto-iterate/research.md`:
+
+```markdown
+# Research Summary
+
+## Task
+[What the user wants to optimize]
+
+## Domain
+[Code optimization | Prompt engineering | Config tuning | Algorithm selection | General]
+
+## Key Findings
+- [Finding 1]
+- [Finding 2]
+- [Finding 3]
+
+## Current Baseline
+- [Current metric if measured]
+- [Known issues or bottlenecks]
+
+## Recommended Evaluation Dimensions
+- [Dimension 1]: [why this matters]
+- [Dimension 2]: [why this matters]
+- [Dimension 3]: [why this matters]
+
+## Common Pitfalls
+- [Pitfall 1]
+- [Pitfall 2]
+```
+
+## Phase 3: Metric Design
+
+Based on the research findings and user answers, design the evaluation system.
+
+**Use the research summary** from `.auto-iterate/research.md` to inform your criteria. The recommended evaluation dimensions and common pitfalls should directly shape what you measure.
 
 ### Option A: Shell Evaluation
 
@@ -133,7 +241,7 @@ Example for prompt optimization:
 
 Use shell for objective metrics, LLM for subjective quality. Combine scores.
 
-## Phase 3: Constraints Definition
+## Phase 4: Constraints Definition
 
 Ask:
 1. **"What can the agent modify?"** (specific files, any file in a directory, etc.)
@@ -143,7 +251,7 @@ Ask:
 
 Write these into the `constraints` section of config.yaml.
 
-## Phase 4: Workspace Setup
+## Phase 5: Workspace Setup
 
 After all questions are answered, create the workspace:
 
@@ -156,6 +264,7 @@ Create `.auto-iterate/config.yaml` from the conversation. Use the template in `t
 ```
 .auto-iterate/
 ├── config.yaml
+├── research.md        ← research summary from Phase 2
 ├── workspace/
 │   ├── current/      ← copy mutable source files here
 │   └── best/         ← copy mutable source files here (initial = current)
@@ -180,12 +289,13 @@ Create a simple script that runs the experiment and outputs a JSON score.
 ### Step 6: Confirm with user
 
 Show the user:
+- The research summary (`.auto-iterate/research.md`)
 - The generated config.yaml
 - What files are in the workspace
 - What the agent will do
 - How to start the agent
 
-## Phase 5: Handoff
+## Phase 6: Handoff
 
 Tell the user:
 
@@ -212,5 +322,6 @@ This is baked into the agent's evaluation logic. The skill ensures the config.ya
 |------|---------|
 | `templates/config.yaml` | Template for experiment config |
 | `templates/history.json` | Empty history template |
+| `.auto-iterate/research.md` | Research summary (created during setup) |
 
 The agent instructions are in a separate file (AGENTS.md or agents/auto-iterator.md). This skill focuses on setup only.
