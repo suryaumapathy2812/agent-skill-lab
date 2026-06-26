@@ -1,6 +1,6 @@
 ---
 name: ai-design
-description: AI workspace product design for AI-first apps, generative UI, artifacts, chat-plus-output layouts, copilots, transcripts, citations, data extraction, agent workflows, and modernizing products into AI-native workspaces inspired by v0, Claude Artifacts, Julius AI, Cursor, Granola, Hebbia, Perplexity, Arc, Raycast, Lobe Chat, AudioPen, Superwhisper, and Reflect.
+description: AI workspace product design for AI-first apps, generative UI, artifacts, chat-plus-output layouts, copilots, transcripts, citations, data extraction, agent workflows, and modernizing products into AI-native workspaces inspired by v0, Claude Artifacts, Julius AI, Cursor, Granola, Hebbia, Perplexity, Arc, Raycast, Lobe Chat, AudioPen, Superwhisper, Reflect, PLAIN, Midday, Polar, and Attio.
 license: MIT
 ---
 
@@ -40,7 +40,25 @@ Use this skill when the user asks to:
 
 ## Product References
 
-Use `reports/skills-and-agents-report.md` when deeper product-specific context is needed.
+Use focused reference files instead of loading everything at once.
+
+Load these files only when relevant:
+
+- `references/ai-design/workspace-blueprints.md` for concrete AI workspace layouts.
+- `references/products/00-ai-focused-layout-patterns.md` for cross-product AI layout patterns.
+- `references/products/v0.md` for generative UI split-pane patterns.
+- `references/products/claude.md` for artifact panels.
+- `references/products/julius-ai.md` for data analysis artifacts.
+- `references/products/cursor.md` for inline AI.
+- `references/products/hebbia.md` for matrix/grid extraction.
+- `references/products/perplexity-ai.md` for citation and source-backed answer UI.
+- `references/products/granola.md`, `references/products/audiopen.md`, and `references/products/superwhisper.md` for transcript and capture-to-artifact flows.
+- `references/products/reflect-notes.md` for document plus AI workspace.
+- `references/products/plain.md` for support/conversation workspace patterns.
+- `references/products/midday.md` for financial/business workspace patterns.
+- `references/products/polar.md` for developer monetization dashboard patterns.
+- `references/products/attio.md` for CRM/data workspace view-switching patterns.
+- `reports/skills-and-agents-report.md` for repository-level inventory.
 
 ## AI Workspace Models
 

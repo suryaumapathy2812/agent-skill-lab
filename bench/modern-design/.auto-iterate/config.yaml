@@ -1,0 +1,98 @@
+task:
+  name: "optimize-modern-design-output"
+  description: "Iterate on the modern-design SKILL.md to produce UI components that match the quality of Linear, Resend, Dub, Attio, Basedash, and other gold standard products. Test with a data table component first."
+  domain: "code"
+
+source:
+  files:
+    - path: "../../skills/modern-design/SKILL.md"
+      description: "The skill file to iterate on. This contains the design instructions."
+      mutable: true
+    - path: "../references/SKILL.md"
+      description: "The original auto-iterate SKILL.md (read-only reference)"
+      mutable: false
+  context: |
+    We are optimizing the modern-design skill to produce better UI output.
+    
+    The skill is a set of design instructions that an AI agent follows to build
+    React/Tailwind components. By improving the instructions, we improve the output.
+    
+    We test by:
+    1. Giving the skill a design task (e.g., "build a data table")
+    2. The skill generates the component
+    3. We screenshot the result
+    4. We compare against reference products
+    5. We modify the skill based on feedback
+    6. Repeat
+    
+    Reference products for comparison: Linear, Resend, Dub, Attio, Basedash, Campsite, Plain, Polar, Cursor
+
+constraints:
+  can:
+    - "Modify the modern-design SKILL.md"
+    - "Add new sections, rules, or examples"
+    - "Remove or simplify existing rules"
+    - "Reorganize the structure"
+  cannot:
+    - "Change the skill name"
+    - "Remove the license"
+    - "Delete the core principle"
+    - "Make the skill incompatible with skills.sh"
+
+experiment:
+  budget:
+    type: time
+    limit: 300
+    timeout_multiplier: 2
+
+evaluate:
+  method: hybrid
+  direction: higher
+  objective_criteria:
+    - name: "spacing"
+      weight: 0.15
+      description: "Consistent spacing rhythm (8px grid, proper padding/margins)"
+      check: "Measure spacing values. Are they on an 8px grid? Consistent within sections?"
+    - name: "hierarchy"
+      weight: 0.15
+      description: "Clear visual hierarchy (size, weight, color, position)"
+      check: "Can you immediately tell what's most important? Is there a clear reading order?"
+    - name: "density"
+      weight: 0.15
+      description: "Information density appropriate for SaaS"
+      check: "Is the table dense enough? Rows ~40-48px? Headers compact?"
+    - name: "alignment"
+      weight: 0.1
+      description: "Proper alignment (text left, numbers right, headers consistent)"
+      check: "Are numbers right-aligned? Headers aligned with content? Labels consistent?"
+  subjective_criteria:
+    - name: "premium_feel"
+      weight: 0.2
+      description: "Does it feel like Linear/Resend level quality?"
+      check: "Look at the screenshot. Does it feel expensive? Polished? Intentional?"
+    - name: "modernity"
+      weight: 0.15
+      description: "Does it look modern (2025-era SaaS)?"
+      check: "No 2015-era patterns. No heavy borders, no bright colors everywhere."
+    - name: "reference_match"
+      weight: 0.1
+      description: "How close is it to the reference products?"
+      check: "Compare side-by-side with Linear/Resend screenshots. Closer = better."
+
+loop:
+  max_iterations: 20
+  improvement_threshold: 0.03
+  patience: 5
+  target_score: null
+
+design_task:
+  type: "component"
+  name: "data_table"
+  description: "Build a data table component for a SaaS admin panel"
+  requirements:
+    - "Shows 10-20 rows of sample data"
+    - "Has column headers with sort indicators"
+    - "Includes status badges, avatars, and action buttons"
+    - "Supports hover states on rows"
+    - "Has a compact header with title and filter/search"
+    - "Built with React + Tailwind + shadcn components"

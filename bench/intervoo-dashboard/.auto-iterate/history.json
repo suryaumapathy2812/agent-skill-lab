@@ -1,0 +1,49 @@
+{
+  "experiment": "intervoo-dashboard-ui",
+  "created_at": "2025-01-26T00:00:00Z",
+  "description": "Improve UI quality of Intervoo dashboard based on existing codebase",
+  "baseline": {
+    "run": 1,
+    "timestamp": "2025-01-26T21:59:00Z",
+    "scores": {
+      "objective": {
+        "consistency": 7,
+        "density": 7,
+        "hierarchy": 7,
+        "alignment": 7
+      },
+      "subjective": {
+        "premium_feel": null,
+        "modernity": null,
+        "reference_match": null
+      },
+      "weighted_total": 7.0
+    },
+    "notes": "First iteration by sub-agent. Clean dark theme, consistent typography, good table patterns. Navigation was broken (view ID mismatch) - fixed."
+  },
+  "runs": [
+    {
+      "run": 1,
+      "timestamp": "2025-01-26T21:59:00Z",
+      "scores": {
+        "objective": {
+          "consistency": 7,
+          "density": 7,
+          "hierarchy": 7,
+          "alignment": 7
+        },
+        "subjective": {
+          "premium_feel": null,
+          "modernity": null,
+          "reference_match": null
+        },
+        "weighted_total": 7.0
+      },
+      "changes": "Initial build by sub-agent",
+      "notes": "Navigation bug fixed (view ID mismatch)"
+    }
+  ],
+  "best_score": 7.0,
+  "best_run": 1,
+  "status": "in_progress"
+}

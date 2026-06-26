@@ -1,0 +1,17 @@
+Run #1 — Baseline
+
+Task: Generate a data table component for a SaaS admin panel
+Files modified: None (baseline)
+Duration: ~5s
+
+Design decisions (following current SKILL.md rules):
+- Row height: 44px (within 40-52px range)
+- Header text: text-xs (12px), muted, semibold, uppercase tracking
+- Horizontal separators only, no vertical grid lines
+- Numbers right-aligned with tabular-nums
+- Status badges: semantic colors (emerald=active, amber=pending, rose=churned)
+- Avatars: 28px rounded with initials
+- Hover: row background shifts to #18181b
+- Dark mode: bg #09090b, surface #111113, border #27272a
+- Buttons: 32px height, primary=accent, secondary=border+ghost
+- Transitions: 150ms ease on row hover

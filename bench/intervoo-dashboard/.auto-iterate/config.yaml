@@ -1,0 +1,75 @@
+# Intervoo Dashboard UI Improvement Experiment
+# Testing the auto-iterate skill on a real-world codebase
+
+name: intervoo-dashboard-ui
+description: |
+  Improve the UI quality of the Intervoo dashboard based on the existing codebase.
+  The current UI is functional but lacks polish and modern design patterns.
+  Goal: Create a more premium, consistent, and modern dashboard experience.
+
+type: ui-quality
+
+# Evaluation method: hybrid (LLM scores objectively, human scores subjectively)
+evaluation:
+  method: hybrid
+
+  # Objective criteria (LLM scores based on concrete factors)
+  objective:
+    - name: "Consistency"
+      weight: 0.3
+      description: "Do all views (list, detail, tabs) feel like they belong to the same product?"
+      criteria:
+        - Same spacing rhythm across pages
+        - Consistent typography hierarchy
+        - Unified color usage
+        - Same component patterns (badges, buttons, tables)
+
+    - name: "Density"
+      weight: 0.2
+      description: "Is information presented efficiently without wasted space?"
+      criteria:
+        - Useful information visible at a glance
+        - No decorative containers wrapping content
+        - Tables are scannable
+        - Detail pages show relevant context
+
+    - name: "Hierarchy"
+      weight: 0.2
+      description: "Is the visual hierarchy clear and obvious?"
+      criteria:
+        - Primary actions are visually distinct
+        - Secondary information is properly muted
+        - Section headers are clear
+        - Status badges are immediately readable
+
+    - name: "Alignment"
+      weight: 0.1
+      description: "Does the UI align with the reference products?"
+      criteria:
+        - Matches Linear/Resend quality level
+        - Follows modern SaaS patterns
+        - No generic template feel
+        - Professional appearance
+
+  # Subjective criteria (human scores based on feel)
+  subjective:
+    - name: "Premium feel"
+      weight: 0.1
+      description: "Does this feel like a well-crafted product?"
+
+    - name: "Modernity"
+      weight: 0.05
+      description: "Does this feel current and well-designed?"
+
+    - name: "Reference match"
+      weight: 0.05
+      description: "How closely does this match the quality of Linear/Resend?"
+
+# Constraints
+max_iterations: 10
+patience: 3
+
+# Workspace
+workspace:
+  current: workspace/current/SKILL.md
+  best: workspace/best/SKILL.md

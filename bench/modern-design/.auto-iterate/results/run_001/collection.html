@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customers — Component Collection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        bg: '#09090b',
+        surface: '#111113',
+        surface2: '#18181b',
+        border: '#27272a',
+        muted: '#71717a',
+        faint: '#a1a1aa',
+        accent: '#6366f1',
+      }
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  table { border-collapse: collapse; }
+  tr { transition: background-color 150ms ease; }
+  tr:hover { background-color: #18181b; }
+  .list-item { transition: background-color 150ms ease; }
+  .list-item:hover { background-color: #18181b; }
+  .card { transition: border-color 150ms ease, background-color 150ms ease; }
+  .card:hover { border-color: #3f3f46; background-color: #161618; }
+</style>
+</head>
+<body class="bg-bg text-zinc-100 min-h-screen p-8">
+
+<div class="max-w-6xl mx-auto space-y-16">
+
+<!-- ============ SECTION 1: TABLE VIEW ============ -->
+<div>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-semibold text-zinc-100">Table View</h2>
+      <p class="text-sm text-muted mt-0.5">Dense, scannable, right-aligned numbers</p>
+    </div>
+    <span class="text-xs text-muted border border-border rounded-md px-2.5 py-1">7 customers</span>
+  </div>
+
+  <div class="border border-border rounded-lg overflow-hidden">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-border">
+          <th class="text-left text-xs font-medium text-muted px-4 py-3 uppercase tracking-wider">Name</th>
+          <th class="text-left text-xs font-medium text-muted px-4 py-3 uppercase tracking-wider">Status</th>
+          <th class="text-left text-xs font-medium text-muted px-4 py-3 uppercase tracking-wider">Plan</th>
+          <th class="text-right text-xs font-medium text-muted px-4 py-3 uppercase tracking-wider">MRR</th>
+          <th class="text-left text-xs font-medium text-muted px-4 py-3 uppercase tracking-wider">Joined</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm">
+        <!-- Row 1 -->
+        <tr class="border-b border-border/60">
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-indigo-500 flex items-center justify-center text-xs font-medium text-white">AK</div>
+              <div>
+                <div class="font-medium text-zinc-200">Alex Kim</div>
+                <div class="text-xs text-muted">alex.kim@example.com</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Active
+            </span>
+          </td>
+          <td class="px-4 py-3 text-muted">Pro</td>
+          <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$1,200</td>
+          <td class="px-4 py-3 text-muted">3 days ago</td>
+        </tr>
+        <!-- Row 2 -->
+        <tr class="border-b border-border/60">
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-rose-500 flex items-center justify-center text-xs font-medium text-white">JS</div>
+              <div>
+                <div class="font-medium text-zinc-200">Jane Smith</div>
+                <div class="text-xs text-muted">jane.smith@example.com</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              Pending
+            </span>
+          </td>
+          <td class="px-4 py-3 text-muted">Starter</td>
+          <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$299</td>
+          <td class="px-4 py-3 text-muted">1 week ago</td>
+        </tr>
+        <!-- Row 3 -->
+        <tr class="border-b border-border/60">
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-cyan-500 flex items-center justify-center text-xs font-medium text-white">MD</div>
+              <div>
+                <div class="font-medium text-zinc-200">Mike Davis</div>
+                <div class="text-xs text-muted">mike.davis@example.com</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Active
+            </span>
+          </td>
+          <td class="px-4 py-3 text-muted">Pro</td>
+          <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$1,850</td>
+          <td class="px-4 py-3 text-muted">2 weeks ago</td>
+        </tr>
+        <!-- Row 4 -->
+        <tr class="border-b border-border/60">
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-violet-500 flex items-center justify-center text-xs font-medium text-white">SR</div>
+              <div>
+                <div class="font-medium text-zinc-200">Sara Reed</div>
+                <div class="text-xs text-muted">sara.reed@example.com</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+              Churned
+            </span>
+          </td>
+          <td class="px-4 py-3 text-muted">Starter</td>
+          <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$0</td>
+          <td class="px-4 py-3 text-muted">1 month ago</td>
+        </tr>
+        <!-- Row 5 -->
+        <tr>
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-xs font-medium text-white">TC</div>
+              <div>
+                <div class="font-medium text-zinc-200">Tom Chen</div>
+                <div class="text-xs text-muted">tom.chen@example.com</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Active
+            </span>
+          </td>
+          <td class="px-4 py-3 text-muted">Enterprise</td>
+          <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$5,400</td>
+          <td class="px-4 py-3 text-muted">2 months ago</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============ SECTION 2: LIST/ITEM VIEW ============ -->
+<div>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-semibold text-zinc-100">List View</h2>
+      <p class="text-sm text-muted mt-0.5">Identity-first, flexible metadata, no grid</p>
+    </div>
+    <span class="text-xs text-muted border border-border rounded-md px-2.5 py-1">7 customers</span>
+  </div>
+
+  <div class="border border-border rounded-lg">
+    <div class="customer-row flex flex-row items-center gap-4 px-4 py-3.5 border-b border-zinc-800">
+      <div class="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-sm font-medium text-white shrink-0">AK</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-zinc-200">Alex Kim</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Active</span>
+        </div>
+        <div class="text-xs text-muted mt-0.5">alex.kim@example.com</div>
+      </div>
+      <div class="hidden md:block text-sm text-muted w-24">Pro</div>
+      <div class="text-right font-mono text-sm text-zinc-300 tabular-nums w-20">$1,200</div>
+      <div class="text-sm text-muted w-28 text-right">3 days ago</div>
+      <button class="text-muted hover:text-zinc-200 transition-colors shrink-0 p-1"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg></button>
+    </div>
+    <div class="customer-row flex flex-row items-center gap-4 px-4 py-3.5 border-b border-zinc-800">
+      <div class="w-9 h-9 rounded-full bg-rose-500 flex items-center justify-center text-sm font-medium text-white shrink-0">JS</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-zinc-200">Jane Smith</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Pending</span>
+        </div>
+        <div class="text-xs text-muted mt-0.5">jane.smith@example.com</div>
+      </div>
+      <div class="hidden md:block text-sm text-muted w-24">Starter</div>
+      <div class="text-right font-mono text-sm text-zinc-300 tabular-nums w-20">$299</div>
+      <div class="text-sm text-muted w-28 text-right">1 week ago</div>
+      <button class="text-muted hover:text-zinc-200 transition-colors shrink-0 p-1"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg></button>
+    </div>
+    <div class="customer-row flex flex-row items-center gap-4 px-4 py-3.5 border-b border-zinc-800">
+      <div class="w-9 h-9 rounded-full bg-cyan-500 flex items-center justify-center text-sm font-medium text-white shrink-0">MD</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-zinc-200">Mike Davis</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Active</span>
+        </div>
+        <div class="text-xs text-muted mt-0.5">mike.davis@example.com</div>
+      </div>
+      <div class="hidden md:block text-sm text-muted w-24">Pro</div>
+      <div class="text-right font-mono text-sm text-zinc-300 tabular-nums w-20">$1,850</div>
+      <div class="text-sm text-muted w-28 text-right">2 weeks ago</div>
+      <button class="text-muted hover:text-zinc-200 transition-colors shrink-0 p-1"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg></button>
+    </div>
+    <div class="customer-row flex flex-row items-center gap-4 px-4 py-3.5 border-b border-zinc-800">
+      <div class="w-9 h-9 rounded-full bg-violet-500 flex items-center justify-center text-sm font-medium text-white shrink-0">SR</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-zinc-200">Sara Reed</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Churned</span>
+        </div>
+        <div class="text-xs text-muted mt-0.5">sara.reed@example.com</div>
+      </div>
+      <div class="hidden md:block text-sm text-muted w-24">Starter</div>
+      <div class="text-right font-mono text-sm text-zinc-300 tabular-nums w-20">$0</div>
+      <div class="text-sm text-muted w-28 text-right">1 month ago</div>
+      <button class="text-muted hover:text-zinc-200 transition-colors shrink-0 p-1"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg></button>
+    </div>
+    <div class="customer-row flex flex-row items-center gap-4 px-4 py-3.5">
+      <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-sm font-medium text-white shrink-0">TC</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-zinc-200">Tom Chen</span>
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Active</span>
+        </div>
+        <div class="text-xs text-muted mt-0.5">tom.chen@example.com</div>
+      </div>
+      <div class="hidden md:block text-sm text-muted w-24">Enterprise</div>
+      <div class="text-right font-mono text-sm text-zinc-300 tabular-nums w-20">$5,400</div>
+      <div class="text-sm text-muted w-28 text-right">2 months ago</div>
+      <button class="text-muted hover:text-zinc-200 transition-colors shrink-0 p-1"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="3" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="13" cy="8" r="1.5"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 3: CARD GRID VIEW ============ -->
+<div>
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-semibold text-zinc-100">Card Grid</h2>
+      <p class="text-sm text-muted mt-0.5">Grouped identity, metadata pairs, meaningful hover</p>
+    </div>
+    <span class="text-xs text-muted border border-border rounded-md px-2.5 py-1">7 customers</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Card 1 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-sm font-medium text-white">AK</div>
+          <div>
+            <div class="font-medium text-zinc-200">Alex Kim</div>
+            <div class="text-xs text-muted mt-0.5">alex.kim@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Active
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Pro</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$1,200</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">3d ago</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-sm font-medium text-white">JS</div>
+          <div>
+            <div class="font-medium text-zinc-200">Jane Smith</div>
+            <div class="text-xs text-muted mt-0.5">jane.smith@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          Pending
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Starter</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$299</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">1w ago</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center text-sm font-medium text-white">MD</div>
+          <div>
+            <div class="font-medium text-zinc-200">Mike Davis</div>
+            <div class="text-xs text-muted mt-0.5">mike.davis@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Active
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Pro</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$1,850</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">2w ago</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-violet-500 flex items-center justify-center text-sm font-medium text-white">SR</div>
+          <div>
+            <div class="font-medium text-zinc-200">Sara Reed</div>
+            <div class="text-xs text-muted mt-0.5">sara.reed@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+          Churned
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Starter</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$0</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">1mo ago</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 5 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-sm font-medium text-white">TC</div>
+          <div>
+            <div class="font-medium text-zinc-200">Tom Chen</div>
+            <div class="text-xs text-muted mt-0.5">tom.chen@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Active
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Enterprise</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$5,400</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">2mo ago</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 6 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-sm font-medium text-white">LP</div>
+          <div>
+            <div class="font-medium text-zinc-200">Lily Park</div>
+            <div class="text-xs text-muted mt-0.5">lily.park@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          Pending
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Pro</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$1,200</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">3mo ago</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 7 -->
+    <div class="card border border-border rounded-xl p-5 bg-surface">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-sm font-medium text-white">NB</div>
+          <div>
+            <div class="font-medium text-zinc-200">Noah Bennett</div>
+            <div class="text-xs text-muted mt-0.5">noah.bennett@example.com</div>
+          </div>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Active
+        </span>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-sm">
+        <div>
+          <div class="text-xs text-muted mb-0.5">Plan</div>
+          <div class="text-zinc-300">Pro</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">MRR</div>
+          <div class="text-zinc-300 font-mono tabular-nums">$1,850</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-0.5">Joined</div>
+          <div class="text-zinc-300">4mo ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

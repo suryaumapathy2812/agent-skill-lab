@@ -114,3 +114,11 @@ A general-purpose autonomous iteration framework. Define what to optimize, how t
 ## skills.sh
 
 The root `skills.sh.json` groups skills for the skills.sh repository page. It does not change installation behavior.
+
+## Reference Strategy
+
+Large design knowledge is split into focused markdown files under `references/` so an agent can load only the needed context:
+
+- `references/products/`: product-specific UI research.
+- `references/modern-design/`: component decisions, RAIL, anti-patterns, spacing, depth, recipes.
+- `references/ai-design/`: AI workspace blueprints and product architecture patterns.

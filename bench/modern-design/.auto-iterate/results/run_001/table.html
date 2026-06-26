@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Table — Baseline</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        bg: '#09090b',
+        surface: '#111113',
+        border: '#27272a',
+        muted: '#71717a',
+        accent: '#6366f1',
+      }
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+table { border-collapse: collapse; }
+tr { transition: background-color 150ms ease; }
+tr:hover { background-color: #18181b; }
+</style>
+</head>
+<body class="bg-bg text-zinc-100 min-h-screen p-8">
+
+<div class="max-w-5xl mx-auto">
+
+<!-- Header -->
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-xl font-semibold text-zinc-100">Customers</h1>
+    <p class="text-sm text-muted mt-0.5">Manage your customer accounts</p>
+  </div>
+  <div class="flex items-center gap-2">
+    <button class="h-8 px-3 text-sm text-muted border border-border rounded-md hover:bg-surface hover:text-zinc-200 transition-colors">
+      Export
+    </button>
+    <button class="h-8 px-3 text-sm text-white bg-accent rounded-md hover:bg-indigo-500 transition-colors font-medium">
+      Add Customer
+    </button>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="border border-border rounded-lg overflow-hidden">
+  <table class="w-full">
+    <thead>
+      <tr class="border-b border-border">
+        <th class="text-left text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">Name</th>
+        <th class="text-left text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">Email</th>
+        <th class="text-left text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">Status</th>
+        <th class="text-left text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">Plan</th>
+        <th class="text-right text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">MRR</th>
+        <th class="text-left text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">Joined</th>
+        <th class="text-right text-xs font-semibold text-muted px-4 py-3 uppercase tracking-wider">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-sm">
+      <!-- Row 1 -->
+      <tr class="border-b border-border">
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-indigo-500 flex items-center justify-center text-xs font-medium text-white">AK</div>
+            <span class="font-medium text-zinc-200">Alex Kim</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">alex.kim@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Active
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Pro</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$1,200</td>
+        <td class="px-4 py-3 text-muted">3 days ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+      <!-- Row 2 -->
+      <tr class="border-b border-border">
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-rose-500 flex items-center justify-center text-xs font-medium text-white">JS</div>
+            <span class="font-medium text-zinc-200">Jane Smith</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">jane.smith@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            Pending
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Starter</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$299</td>
+        <td class="px-4 py-3 text-muted">1 week ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+      <!-- Row 3 -->
+      <tr class="border-b border-border">
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-cyan-500 flex items-center justify-center text-xs font-medium text-white">MD</div>
+            <span class="font-medium text-zinc-200">Mike Davis</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">mike.davis@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Active
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Pro</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$1,850</td>
+        <td class="px-4 py-3 text-muted">2 weeks ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+      <!-- Row 4 -->
+      <tr class="border-b border-border">
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-violet-500 flex items-center justify-center text-xs font-medium text-white">SR</div>
+            <span class="font-medium text-zinc-200">Sara Reed</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">sara.reed@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+            Churned
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Starter</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$0</td>
+        <td class="px-4 py-3 text-muted">1 month ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+      <!-- Row 5 -->
+      <tr class="border-b border-border">
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-xs font-medium text-white">TC</div>
+            <span class="font-medium text-zinc-200">Tom Chen</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">tom.chen@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Active
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Enterprise</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$5,400</td>
+        <td class="px-4 py-3 text-muted">2 months ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+      <!-- Row 6 -->
+      <tr class="border-b border-border">
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-xs font-medium text-white">LP</div>
+            <span class="font-medium text-zinc-200">Lily Park</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">lily.park@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            Pending
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Pro</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$1,200</td>
+        <td class="px-4 py-3 text-muted">3 months ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+      <!-- Row 7 -->
+      <tr>
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-teal-500 flex items-center justify-center text-xs font-medium text-white">NB</div>
+            <span class="font-medium text-zinc-200">Noah Bennett</span>
+          </div>
+        </td>
+        <td class="px-4 py-3 text-muted">noah.bennett@example.com</td>
+        <td class="px-4 py-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Active
+          </span>
+        </td>
+        <td class="px-4 py-3 text-muted">Pro</td>
+        <td class="px-4 py-3 text-right font-mono text-zinc-300 tabular-nums">$1,850</td>
+        <td class="px-4 py-3 text-muted">4 months ago</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-muted hover:text-zinc-100 transition-colors p-1">⋮</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Footer -->
+<div class="flex items-center justify-between mt-4 text-sm text-muted">
+  <span>Showing 7 of 2,847 customers</span>
+  <div class="flex items-center gap-2">
+    <button class="h-8 px-3 border border-border rounded-md text-sm hover:bg-surface transition-colors">Previous</button>
+    <button class="h-8 px-3 border border-border rounded-md text-sm hover:bg-surface transition-colors">Next</button>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>

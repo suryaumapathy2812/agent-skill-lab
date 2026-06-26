@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intervoo — Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0f1117',
+            surface: '#161822',
+            surface2: '#1e2030',
+            border: 'rgba(255, 255, 255, 0.08)',
+            'border-strong': 'rgba(255, 255, 255, 0.14)',
+            muted: '#6b7280',
+            faint: '#9ca3af',
+            accent: '#22d3ee',
+            'accent-dim': 'rgba(34, 211, 238, 0.12)',
+            'accent-hover': 'rgba(34, 211, 238, 0.08)',
+            success: '#10b981',
+            'success-dim': 'rgba(16, 185, 129, 0.12)',
+            warning: '#f59e0b',
+            'warning-dim': 'rgba(245, 158, 11, 0.12)',
+            destructive: '#ef4444',
+            'destructive-dim': 'rgba(239, 68, 68, 0.12)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0f1117; color: #e5e7eb; margin: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+    .view { display: none; animation: fadeIn 0.2s ease; }
+    .view.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+    .tab-btn { position: relative; padding: 10px 0; font-size: 13px; font-weight: 500; color: #6b7280; transition: color 0.2s; cursor: pointer; background: none; border: none; }
+    .tab-btn:hover { color: #9ca3af; }
+    .tab-btn.active { color: #e5e7eb; }
+    .tab-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1.5px; background: #22d3ee; border-radius: 1px; }
+    .tab-content { display: none; animation: fadeIn 0.25s ease; }
+    .tab-content.active { display: block; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #4b5563; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.01); }
+    td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; color: #d1d5db; transition: background 0.12s; }
+    tr:hover td { background: rgba(255,255,255,0.015); }
+    .row-click { cursor: pointer; }
+    .row-click:hover td { background: rgba(255,255,255,0.025); }
+    .row-click:active td { background: rgba(255,255,255,0.04); }
+    .progress-track { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #22d3ee, #06b6d4); transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.02em; white-space: nowrap; }
+    .badge-accent { background: rgba(34, 211, 238, 0.1); color: #22d3ee; border: 1px solid rgba(34, 211, 238, 0.15); }
+    .badge-success { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.15); }
+    .badge-warning { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.15); }
+    .badge-destructive { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+    .badge-neutral { background: rgba(255,255,255,0.04); color: #9ca3af; border: 1px solid rgba(255,255,255,0.08); }
+    .stat-card { background: #161822; border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 20px 22px; cursor: pointer; transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .stat-card:hover { border-color: rgba(255,255,255,0.1); background: #1a1d2e; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .stat-card.active { border-color: rgba(34, 211, 238, 0.25); background: rgba(34, 211, 238, 0.03); box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.1), 0 4px 12px rgba(0,0,0,0.15); }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 7px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #6b7280; cursor: pointer; transition: all 0.15s; text-decoration: none; position: relative; }
+    .sidebar-item:hover { color: #d1d5db; background: rgba(255,255,255,0.04); }
+    .sidebar-item.active { color: #e5e7eb; background: rgba(255,255,255,0.06); }
+    .sidebar-item.active::before { content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 3px; height: 16px; background: #22d3ee; border-radius: 0 2px 2px 0; }
+    .input { background: #161822; border: 1px solid rgba(255,255,255,0.07); border-radius: 6px; padding: 7px 12px 7px 34px; font-size: 13px; color: #e5e7eb; outline: none; width: 100%; transition: all 0.2s; }
+    .input::placeholder { color: #4b5563; }
+    .input:focus { border-color: rgba(34, 211, 238, 0.35); box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.06); }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: none; white-space: nowrap; }
+    .btn-primary { background: #22d3ee; color: #0f1117; font-weight: 600; }
+    .btn-primary:hover { background: #06b6d4; box-shadow: 0 2px 8px rgba(34, 211, 238, 0.2); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-ghost { background: transparent; color: #9ca3af; border: 1px solid rgba(255,255,255,0.07); }
+    .btn-ghost:hover { color: #e5e7eb; border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); }
+    .btn-ghost:active { transform: scale(0.98); }
+    .btn-danger { background: rgba(239, 68, 68, 0.08); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.12); }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.2); }
+    .round-card { background: #161822; border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 18px; transition: border-color 0.2s; }
+    .round-card:hover { border-color: rgba(255,255,255,0.1); }
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 4px; top: 8px; bottom: 8px; width: 1px; background: rgba(255,255,255,0.06); }
+    .timeline-dot { position: absolute; left: -1px; top: 12px; width: 9px; height: 9px; border-radius: 50%; border: 2px solid; }
+    .dot-complete { border-color: #10b981; background: rgba(16, 185, 129, 0.3); box-shadow: 0 0 6px rgba(16, 185, 129, 0.2); }
+    .dot-active { border-color: #22d3ee; background: rgba(34, 211, 238, 0.3); box-shadow: 0 0 6px rgba(34, 211, 238, 0.2); }
+    .dot-pending { border-color: rgba(255,255,255,0.12); background: transparent; }
+    .search-wrap { position: relative; }
+    .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #4b5563; width: 16px; height: 16px; transition: color 0.15s; }
+    .search-wrap:focus-within svg { color: #22d3ee; }
+    .pagination { display: flex; align-items: center; gap: 2px; }
+    .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 12px; font-weight: 500; color: #6b7280; cursor: pointer; transition: all 0.15s; background: none; border: none; }
+    .page-btn:hover { color: #d1d5db; background: rgba(255,255,255,0.04); }
+    .page-btn.active { color: #e5e7eb; background: rgba(255,255,255,0.07); }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+    .skill-tag { display: inline-flex; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; background: rgba(255,255,255,0.03); color: #9ca3af; border: 1px solid rgba(255,255,255,0.06); transition: all 0.15s; }
+    .skill-tag:hover { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #d1d5db; }
+    .info-card { background: #161822; border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 16px; transition: border-color 0.2s; }
+    .info-card:hover { border-color: rgba(255,255,255,0.08); }
+    .info-row { display: flex; justify-content: space-between; align-items: center; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #6b7280; cursor: pointer; transition: color 0.15s; background: none; border: none; padding: 0; margin-bottom: 20px; }
+    .back-link:hover { color: #d1d5db; }
+    select.input { padding-left: 12px; appearance: auto; cursor: pointer; }
+    .border-card { border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+    /* Accessibility */
+    *:focus-visible { outline: 1.5px solid rgba(34, 211, 238, 0.5); outline-offset: 2px; border-radius: 4px; }
+    .btn:focus-visible, .page-btn:focus-visible, .stat-card:focus-visible { box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.3); }
+    /* Subtle ambient light effect */
+    .view.active::before { content: ''; position: fixed; top: 0; right: 0; width: 600px; height: 600px; background: radial-gradient(ellipse at top right, rgba(34, 211, 238, 0.015), transparent 70%); pointer-events: none; z-index: 0; }
+  </style>
+</head>
+<body class="bg-bg min-h-screen">
+
+  <!-- ==================== LAYOUT SHELL ==================== -->
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-[220px] border-r border-border flex flex-col flex-shrink-0 sticky top-0 h-screen overflow-y-auto" style="border-color: rgba(255,255,255,0.06);">
+      <div class="px-4 py-5 flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-md bg-accent flex items-center justify-center" style="box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f1117" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <span class="text-sm font-semibold tracking-tight text-white">Intervoo</span>
+      </div>
+      <div class="px-3 mt-1">
+        <div class="text-[10px] font-medium uppercase tracking-wider text-muted mb-2 px-2">Workspace</div>
+        <nav class="sidebar-nav">
+          <a class="sidebar-item active" onclick="navigate('users')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Users
+          </a>
+          <a class="sidebar-item" onclick="navigate('jobs')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            Jobs
+          </a>
+          <a class="sidebar-item" onclick="navigate('diagnostics')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Diagnostics
+          </a>
+        </nav>
+      </div>
+      <div class="px-3 mt-6">
+        <div class="text-[10px] font-medium uppercase tracking-wider text-muted mb-2 px-2">Settings</div>
+        <nav class="sidebar-nav">
+          <a class="sidebar-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            Integrations
+          </a>
+          <a class="sidebar-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Security
+          </a>
+        </nav>
+      </div>
+      <div class="mt-auto px-3 py-4 border-t border-border" style="border-color: rgba(255,255,255,0.06);">
+        <div class="flex items-center gap-2.5 px-2">
+          <div class="w-7 h-7 rounded-full bg-accent-dim flex items-center justify-center text-accent text-[11px] font-semibold">SA</div>
+          <div class="text-xs text-faint">Surya Admin</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-w-0">
+
+      <!-- ==================== USERS LIST ==================== -->
+      <div id="view-users" class="view active">
+        <div class="px-8 py-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-lg font-semibold tracking-tight text-white">Users</h1>
+              <p class="text-sm text-muted mt-0.5">Manage candidates and their diagnostic attempts</p>
+            </div>
+          </div>
+          <!-- Search & Filters -->
+          <div class="flex items-center gap-3 mb-5">
+            <div class="search-wrap flex-1 max-w-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input class="input" type="text" placeholder="Search users..." oninput="filterUsers(this.value)">
+            </div>
+            <button class="btn btn-ghost text-xs">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filters
+            </button>
+          </div>
+          <!-- Table -->
+          <div class="border-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Resume</th>
+                  <th>Diagnostics</th>
+                  <th>Stage</th>
+                  <th>Last Attempt</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div class="flex items-center justify-between mt-4">
+            <div class="text-xs text-muted">Showing 1–5 of 5 users</div>
+            <div class="pagination">
+              <button class="page-btn" disabled style="opacity:0.3">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn" disabled style="opacity:0.3">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== USERS DETAIL ==================== -->
+      <div id="view-users-detail" class="view">
+        <div class="px-8 py-6">
+          <!-- Back nav -->
+          <button class="back-link" onclick="navigate('users')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Users
+          </button>
+          <!-- Header -->
+          <div class="flex items-start justify-between mb-6">
+            <div class="flex items-center gap-4">
+              <div id="user-detail-avatar" class="avatar w-12 h-12 text-lg"></div>
+              <div>
+                <div class="flex items-center gap-3">
+                  <h1 id="user-detail-name" class="text-lg font-semibold tracking-tight text-white"></h1>
+                  <span id="user-detail-stage" class="badge"></span>
+                </div>
+                <div class="flex items-center gap-4 mt-1 text-sm text-muted">
+                  <span id="user-detail-email"></span>
+                  <span id="user-detail-phone"></span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="user-detail-free" class="badge badge-accent">Free Diagnostic Available</span>
+              <button class="btn btn-ghost text-xs">Export</button>
+            </div>
+          </div>
+          <!-- Tabs -->
+          <div class="flex items-center gap-6 border-b border-border mb-6" style="border-color: rgba(255,255,255,0.06);">
+            <button class="tab-btn active" onclick="switchTab(this, 'user-tab', 'overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab(this, 'user-tab', 'attempts')">JD Attempts</button>
+            <button class="tab-btn" onclick="switchTab(this, 'user-tab', 'orders')">Orders</button>
+            <button class="tab-btn" onclick="switchTab(this, 'user-tab', 'credits')">Credits</button>
+            <button class="tab-btn" onclick="switchTab(this, 'user-tab', 'audit')">Audit</button>
+          </div>
+          <!-- Tab: Overview -->
+          <div id="user-tab-overview" class="tab-content active">
+            <div class="grid grid-cols-3 gap-6">
+              <div class="col-span-2">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Role</div>
+                    <div id="user-detail-role" class="text-sm font-medium text-white"></div>
+                  </div>
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Experience</div>
+                    <div id="user-detail-exp" class="text-sm font-medium text-white"></div>
+                  </div>
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Diagnostics Completed</div>
+                    <div id="user-detail-diag-count" class="text-sm font-medium text-white"></div>
+                  </div>
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Free Diagnostics</div>
+                    <div class="text-sm font-medium text-white">1 remaining</div>
+                  </div>
+                </div>
+                <!-- Resume Preview -->
+                <div class="info-card p-5">
+                  <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-3">Resume Preview</div>
+                  <div class="bg-surface2 rounded-md p-4 text-sm text-faint leading-relaxed" style="color: #8b95a5;">
+                    <div id="user-detail-resume" class="whitespace-pre-line"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Skills Sidebar -->
+              <div>
+                <div class="info-card p-5 mb-4">
+                  <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-3">Skills</div>
+                  <div id="user-detail-skills" class="flex flex-wrap gap-1.5"></div>
+                </div>
+                <div class="info-card p-5">
+                  <div class="text-xs font-medium uppercase tracking-wider text-muted mb-3">Activity</div>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Account created</span>
+                      <span class="text-muted">Jan 12, 2025</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Last login</span>
+                      <span class="text-muted">2 hours ago</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Total sessions</span>
+                      <span class="text-muted">24</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab: JD Attempts -->
+          <div id="user-tab-attempts" class="tab-content">
+            <div class="border-card">
+              <table>
+                <thead><tr><th>Job</th><th>Company</th><th>Rounds</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody>
+                  <tr class="row-click" onclick="navigate('diagnostics-detail')">
+                    <td class="font-medium text-white">Senior Frontend Engineer</td>
+                    <td>TechCorp Inc</td>
+                    <td><span class="badge badge-success">3/4</span></td>
+                    <td><span class="badge badge-success">Completed</span></td>
+                    <td class="text-muted">Jan 15, 2025</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Tab: Orders -->
+          <div id="user-tab-orders" class="tab-content">
+            <div class="border-card">
+              <table>
+                <thead><tr><th>Order ID</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="font-mono text-xs text-faint">#ORD-2024-001</td>
+                    <td class="font-medium text-white">₹999</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td class="text-muted">Jan 10, 2025</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Tab: Credits -->
+          <div id="user-tab-credits" class="tab-content">
+            <div class="grid grid-cols-3 gap-4">
+              <div class="stat-card">
+                <div class="text-2xl font-semibold tracking-tight text-white">3</div>
+                <div class="text-xs text-muted mt-1">Total Credits</div>
+              </div>
+              <div class="stat-card">
+                <div class="text-2xl font-semibold tracking-tight text-white">1</div>
+                <div class="text-xs text-muted mt-1">Used</div>
+              </div>
+              <div class="stat-card">
+                <div class="text-2xl font-semibold tracking-tight text-accent">2</div>
+                <div class="text-xs text-muted mt-1">Available</div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab: Audit -->
+          <div id="user-tab-audit" class="tab-content">
+            <div class="border border-border rounded-lg overflow-hidden" style="border-color: rgba(255,255,255,0.06);">
+              <table>
+                <thead><tr><th>Action</th><th>Operator</th><th>Details</th><th>Timestamp</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="text-white">Account upgraded</td>
+                    <td class="text-faint">System</td>
+                    <td class="text-muted">Plan changed to Pro</td>
+                    <td class="text-muted">Jan 12, 2025 14:30</td>
+                  </tr>
+                  <tr>
+                    <td class="text-white">Diagnostic purchased</td>
+                    <td class="text-faint">Self</td>
+                    <td class="text-muted">1 credit added via payment</td>
+                    <td class="text-muted">Jan 10, 2025 09:15</td>
+                  </tr>
+                  <tr>
+                    <td class="text-white">Account created</td>
+                    <td class="text-faint">System</td>
+                    <td class="text-muted">Registration via Google OAuth</td>
+                    <td class="text-muted">Jan 5, 2025 11:20</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== JOBS LIST ==================== -->
+      <div id="view-jobs" class="view">
+        <div class="px-8 py-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-lg font-semibold tracking-tight text-white">Jobs</h1>
+              <p class="text-sm text-muted mt-0.5">Manage job descriptions and diagnostic rounds</p>
+            </div>
+            <button class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New JD
+            </button>
+          </div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="search-wrap flex-1 max-w-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input class="input" type="text" placeholder="Search jobs...">
+            </div>
+          </div>
+          <div class="border-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Job</th>
+                  <th>Company</th>
+                  <th>Location</th>
+                  <th>Experience</th>
+                  <th>CTC</th>
+                  <th>Diagnostics</th>
+                  <th>Completion</th>
+                </tr>
+              </thead>
+              <tbody id="jobs-table-body"></tbody>
+            </table>
+          </div>
+          <div class="flex items-center justify-between mt-4">
+            <div class="text-xs text-muted">Showing 1–5 of 5 jobs</div>
+            <div class="pagination">
+              <button class="page-btn" disabled style="opacity:0.3">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn" disabled style="opacity:0.3">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== JOBS DETAIL ==================== -->
+      <div id="view-jobs-detail" class="view">
+        <div class="px-8 py-6">
+          <button class="back-link" onclick="navigate('jobs')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Jobs
+          </button>
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <h1 id="job-detail-title" class="text-lg font-semibold tracking-tight text-white"></h1>
+              <div class="flex items-center gap-3 mt-1 text-sm text-muted">
+                <span id="job-detail-company"></span>
+                <span class="text-border">·</span>
+                <span id="job-detail-location"></span>
+                <span class="text-border">·</span>
+                <span id="job-detail-exp"></span>
+                <span class="text-border">·</span>
+                <span id="job-detail-ctc"></span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="btn btn-ghost text-xs">Edit</button>
+              <button class="btn btn-ghost text-xs">Duplicate</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 border-b border-border mb-6" style="border-color: rgba(255,255,255,0.06);">
+            <button class="tab-btn active" onclick="switchTab(this, 'job-tab', 'overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab(this, 'job-tab', 'rounds')">Rounds</button>
+            <button class="tab-btn" onclick="switchTab(this, 'job-tab', 'description')">Description</button>
+          </div>
+          <!-- Tab: Overview -->
+          <div id="job-tab-overview" class="tab-content active">
+            <div class="grid grid-cols-3 gap-6">
+              <div class="col-span-2">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Diagnostics</div>
+                    <div id="job-detail-diag-count" class="text-2xl font-semibold tracking-tight text-white"></div>
+                  </div>
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Completion</div>
+                    <div class="flex items-center gap-2.5">
+                      <div class="flex-1 progress-track"><div id="job-detail-progress" class="progress-fill"></div></div>
+                      <span id="job-detail-progress-text" class="text-sm font-medium text-white"></span>
+                    </div>
+                  </div>
+                  <div class="info-card">
+                    <div class="text-xs text-muted mb-1.5">Status</div>
+                    <span class="badge badge-success">Active</span>
+                  </div>
+                </div>
+                <!-- Skills -->
+                <div class="info-card p-5">
+                  <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-3">Required Skills</div>
+                  <div id="job-detail-skills" class="flex flex-wrap gap-1.5"></div>
+                </div>
+              </div>
+              <!-- Sidebar -->
+              <div>
+                <div class="info-card p-5">
+                  <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-3">Quick Info</div>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Created</span>
+                      <span class="text-muted">Jan 8, 2025</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Updated</span>
+                      <span class="text-muted">2 days ago</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Total candidates</span>
+                      <span class="text-muted">12</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-faint">Rounds configured</span>
+                      <span class="text-muted">4</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab: Rounds -->
+          <div id="job-tab-rounds" class="tab-content">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="round-card">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    <span class="text-sm font-medium text-white">Round 1: Screening</span>
+                  </div>
+                  <span class="badge badge-accent">Active</span>
+                </div>
+                <p class="text-xs text-muted leading-relaxed mb-3">Initial assessment of candidate qualifications and cultural fit. Covers resume review, communication skills, and basic technical knowledge.</p>
+                <div class="flex items-center gap-4 text-xs text-muted">
+                  <span>Duration: 30 min</span>
+                  <span>Questions: 12</span>
+                  <span>Pass rate: 65%</span>
+                </div>
+              </div>
+              <div class="round-card">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    <span class="text-sm font-medium text-white">Round 2: Behavioural</span>
+                  </div>
+                  <span class="badge badge-accent">Active</span>
+                </div>
+                <p class="text-xs text-muted leading-relaxed mb-3">Deep dive into past experiences and leadership capabilities. Evaluates conflict resolution, teamwork, and decision-making under pressure.</p>
+                <div class="flex items-center gap-4 text-xs text-muted">
+                  <span>Duration: 45 min</span>
+                  <span>Questions: 8</span>
+                  <span>Pass rate: 58%</span>
+                </div>
+              </div>
+              <div class="round-card">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    <span class="text-sm font-medium text-white">Round 3: Technical Thinking</span>
+                  </div>
+                  <span class="badge badge-warning">Draft</span>
+                </div>
+                <p class="text-xs text-muted leading-relaxed mb-3">Assessment of problem-solving abilities and technical architecture thinking. Includes system design, code review, and debugging scenarios.</p>
+                <div class="flex items-center gap-4 text-xs text-muted">
+                  <span>Duration: 60 min</span>
+                  <span>Questions: 6</span>
+                  <span>Pass rate: 42%</span>
+                </div>
+              </div>
+              <div class="round-card">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    <span class="text-sm font-medium text-white">Round 4: Career Readiness</span>
+                  </div>
+                  <span class="badge badge-neutral">Disabled</span>
+                </div>
+                <p class="text-xs text-muted leading-relaxed mb-3">Evaluation of long-term career alignment and growth mindset. Covers learning agility, mentorship potential, and organizational commitment.</p>
+                <div class="flex items-center gap-4 text-xs text-muted">
+                  <span>Duration: 20 min</span>
+                  <span>Questions: 10</span>
+                  <span>Pass rate: 71%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab: Description -->
+          <div id="job-tab-description" class="tab-content">
+            <div class="info-card p-6 max-w-3xl">
+              <div id="job-detail-description" class="text-sm text-faint leading-relaxed whitespace-pre-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== DIAGNOSTICS LIST ==================== -->
+      <div id="view-diagnostics" class="view">
+        <div class="px-8 py-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-lg font-semibold tracking-tight text-white">Diagnostics</h1>
+              <p class="text-sm text-muted mt-0.5">Track interview diagnostics across all candidates</p>
+            </div>
+          </div>
+          <!-- Stat Cards -->
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <div class="stat-card active" tabindex="0" role="button" onclick="filterDiagnostics('all')" id="stat-all" onkeydown="if(event.key==='Enter')filterDiagnostics('all')">
+              <div class="text-2xl font-semibold tracking-tight text-white">5</div>
+              <div class="text-xs text-muted mt-1">All Diagnostics</div>
+            </div>
+            <div class="stat-card" tabindex="0" role="button" onclick="filterDiagnostics('in-progress')" id="stat-in-progress" onkeydown="if(event.key==='Enter')filterDiagnostics('in-progress')">
+              <div class="text-2xl font-semibold tracking-tight text-warning">3</div>
+              <div class="text-xs text-muted mt-1">In Progress</div>
+            </div>
+            <div class="stat-card" tabindex="0" role="button" onclick="filterDiagnostics('completed')" id="stat-completed" onkeydown="if(event.key==='Enter')filterDiagnostics('completed')">
+              <div class="text-2xl font-semibold tracking-tight text-success">2</div>
+              <div class="text-xs text-muted mt-1">Completed</div>
+            </div>
+          </div>
+          <!-- Search & Filters -->
+          <div class="flex items-center gap-3 mb-5">
+            <div class="search-wrap flex-1 max-w-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input class="input" type="text" placeholder="Search diagnostics...">
+            </div>
+            <select class="input !w-auto !pl-3 text-xs" style="appearance: auto;">
+              <option>All Statuses</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+              <option>Pending</option>
+            </select>
+          </div>
+          <!-- Table -->
+          <div class="border-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Job</th>
+                  <th>Candidate</th>
+                  <th>Progress</th>
+                  <th>Status</th>
+                  <th>Last Activity</th>
+                  <th>Payment</th>
+                </tr>
+              </thead>
+              <tbody id="diagnostics-table-body"></tbody>
+            </table>
+          </div>
+          <div class="flex items-center justify-between mt-4">
+            <div class="text-xs text-muted">Showing 1–5 of 5 diagnostics</div>
+            <div class="pagination">
+              <button class="page-btn" disabled style="opacity:0.3">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn" disabled style="opacity:0.3">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== DIAGNOSTICS DETAIL ==================== -->
+      <div id="view-diagnostics-detail" class="view">
+        <div class="px-8 py-6">
+          <button class="back-link" onclick="navigate('diagnostics')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Diagnostics
+          </button>
+          <!-- Header -->
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-3 mb-1">
+                <h1 class="text-lg font-semibold tracking-tight text-white">Alex Kim — Senior Frontend Engineer</h1>
+                <span class="badge badge-success">Completed</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm text-muted">
+                <span>TechCorp Inc</span>
+                <span class="text-border">·</span>
+                <span>Round 3/4 completed</span>
+                <span class="text-border">·</span>
+                <span>Started Jan 12, 2025</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="btn btn-ghost text-xs">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Report
+              </button>
+              <button class="btn btn-primary text-xs">Send to Client</button>
+            </div>
+          </div>
+          <!-- Tabs -->
+          <div class="flex items-center gap-6 border-b border-border mb-6" style="border-color: rgba(255,255,255,0.06);">
+            <button class="tab-btn active" onclick="switchTab(this, 'diag-tab', 'overview')">Overview</button>
+            <button class="tab-btn" onclick="switchTab(this, 'diag-tab', 'payments')">Payments</button>
+            <button class="tab-btn" onclick="switchTab(this, 'diag-tab', 'audit')">Audit</button>
+          </div>
+          <!-- Tab: Overview -->
+          <div id="diag-tab-overview" class="tab-content active">
+            <div class="grid grid-cols-3 gap-6">
+              <div class="col-span-2">
+                <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-4">Round Progress</div>
+                <div class="timeline space-y-5 mb-6">
+                  <div class="relative">
+                    <div class="timeline-dot dot-complete"></div>
+                    <div class="info-card p-4 ml-4">
+                      <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                          <span class="text-sm font-medium text-white">Round 1: Screening</span>
+                          <span class="badge badge-success text-[10px]">Passed</span>
+                        </div>
+                        <span class="text-xs text-muted">Jan 12, 2025</span>
+                      </div>
+                      <div class="text-xs text-muted">Score: 82/100 · Duration: 28 min · 10/12 questions correct</div>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <div class="timeline-dot dot-complete"></div>
+                    <div class="info-card p-4 ml-4">
+                      <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                          <span class="text-sm font-medium text-white">Round 2: Behavioural</span>
+                          <span class="badge badge-success text-[10px]">Passed</span>
+                        </div>
+                        <span class="text-xs text-muted">Jan 13, 2025</span>
+                      </div>
+                      <div class="text-xs text-muted">Score: 76/100 · Duration: 42 min · Strong leadership examples</div>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <div class="timeline-dot dot-complete"></div>
+                    <div class="info-card p-4 ml-4">
+                      <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                          <span class="text-sm font-medium text-white">Round 3: Technical Thinking</span>
+                          <span class="badge badge-success text-[10px]">Passed</span>
+                        </div>
+                        <span class="text-xs text-muted">Jan 14, 2025</span>
+                      </div>
+                      <div class="text-xs text-muted">Score: 88/100 · Duration: 55 min · Excellent system design thinking</div>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <div class="timeline-dot dot-pending"></div>
+                    <div class="info-card p-4 ml-4 opacity-50">
+                      <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                          <span class="text-sm font-medium text-white">Round 4: Career Readiness</span>
+                          <span class="badge badge-neutral text-[10px]">Not started</span>
+                        </div>
+                        <span class="text-xs text-muted">—</span>
+                      </div>
+                      <div class="text-xs text-muted">Awaiting completion</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Sidebar -->
+              <div>
+                <div class="info-card p-5 mb-4">
+                  <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-3">Candidate</div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="avatar w-10 h-10 text-sm bg-accent-dim text-accent">AK</div>
+                    <div>
+                      <div class="text-sm font-medium text-white">Alex Kim</div>
+                      <div class="text-xs text-muted">alex.kim@example.com</div>
+                    </div>
+                  </div>
+                  <div class="space-y-2 text-xs">
+                    <div class="flex justify-between"><span class="text-muted">Role</span><span class="text-faint">Senior Frontend Engineer</span></div>
+                    <div class="flex justify-between"><span class="text-muted">Experience</span><span class="text-faint">8 years</span></div>
+                    <div class="flex justify-between"><span class="text-muted">Plan</span><span class="text-faint">Pro</span></div>
+                  </div>
+                </div>
+                <div class="info-card p-5">
+                  <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-3">Actions</div>
+                  <div class="space-y-2">
+                    <button class="btn btn-ghost text-xs w-full justify-center">Email Candidate</button>
+                    <button class="btn btn-ghost text-xs w-full justify-center">Share Report</button>
+                    <button class="btn btn-danger text-xs w-full justify-center">Cancel Diagnostic</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab: Payments -->
+          <div id="diag-tab-payments" class="tab-content">
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-4">Order Details</div>
+                <div class="info-card p-5">
+                  <div class="space-y-3">
+                    <div class="flex justify-between text-sm"><span class="text-muted">Order ID</span><span class="font-mono text-faint">#ORD-2025-042</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-muted">Amount</span><span class="font-medium text-white">₹999</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-muted">Status</span><span class="badge badge-success">Paid</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-muted">Method</span><span class="text-faint">UPI</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-muted">Date</span><span class="text-faint">Jan 11, 2025</span></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="text-[11px] font-medium uppercase tracking-wider text-muted mb-4">Payments</div>
+                <div class="border-card">
+                  <table>
+                    <thead><tr><th>Transaction</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+                    <tbody>
+                      <tr>
+                        <td class="font-mono text-xs text-faint">TXN-8847</td>
+                        <td class="font-medium text-white">₹999</td>
+                        <td><span class="badge badge-success">Success</span></td>
+                        <td class="text-muted">Jan 11, 09:32</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tab: Audit -->
+          <div id="diag-tab-audit" class="tab-content">
+            <div class="border-card">
+              <table>
+                <thead><tr><th>Timestamp</th><th>Operator</th><th>Action</th><th>Details</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="text-muted text-xs font-mono">Jan 14, 15:20</td>
+                    <td class="text-faint">Alex Kim</td>
+                    <td class="text-white">Round 3 completed</td>
+                    <td class="text-muted">Score: 88/100</td>
+                  </tr>
+                  <tr>
+                    <td class="text-muted text-xs font-mono">Jan 13, 11:45</td>
+                    <td class="text-faint">Alex Kim</td>
+                    <td class="text-white">Round 2 completed</td>
+                    <td class="text-muted">Score: 76/100</td>
+                  </tr>
+                  <tr>
+                    <td class="text-muted text-xs font-mono">Jan 12, 10:00</td>
+                    <td class="text-faint">Alex Kim</td>
+                    <td class="text-white">Round 1 completed</td>
+                    <td class="text-muted">Score: 82/100</td>
+                  </tr>
+                  <tr>
+                    <td class="text-muted text-xs font-mono">Jan 11, 09:32</td>
+                    <td class="text-faint">System</td>
+                    <td class="text-white">Payment received</td>
+                    <td class="text-muted">₹999 via UPI</td>
+                  </tr>
+                  <tr>
+                    <td class="text-muted text-xs font-mono">Jan 11, 09:30</td>
+                    <td class="text-faint">System</td>
+                    <td class="text-white">Diagnostic initiated</td>
+                    <td class="text-muted">Created for Senior Frontend Engineer @ TechCorp</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // ===== DATA =====
+    const users = [
+      { name: 'Alex Kim', email: 'alex.kim@example.com', phone: '+91 98765 43210', role: 'Senior Frontend Engineer', experience: '8 years', stage: 'Pro', stageClass: 'badge-accent', diagnostics: 3, lastAttempt: '2 hours ago', avatar: 'AK', avatarBg: 'bg-accent-dim text-accent', status: 'Active', statusClass: 'badge-success', skills: ['React', 'TypeScript', 'Next.js', 'GraphQL', 'Tailwind CSS', 'Node.js'], resume: 'Senior Frontend Engineer with 8 years of experience building scalable web applications. Expert in React ecosystem, performance optimization, and design systems. Led frontend architecture for products serving 10M+ users.' },
+      { name: 'Jane Smith', email: 'jane.smith@example.com', phone: '+91 87654 32109', role: 'Product Manager', experience: '5 years', stage: 'Starter', stageClass: 'badge-neutral', diagnostics: 1, lastAttempt: '1 day ago', avatar: 'JS', avatarBg: 'bg-success-dim text-success', status: 'Pending', statusClass: 'badge-warning', skills: ['Product Strategy', 'Agile', 'User Research', 'Analytics', 'Roadmapping'], resume: 'Product Manager with 5 years of experience in B2B SaaS. Strong background in user research, data-driven decision making, and cross-functional team leadership.' },
+      { name: 'Mike Davis', email: 'mike.davis@example.com', phone: '+91 76543 21098', role: 'DevOps Engineer', experience: '10 years', stage: 'Pro', stageClass: 'badge-accent', diagnostics: 5, lastAttempt: '3 days ago', avatar: 'MD', avatarBg: 'bg-warning-dim text-warning', status: 'Active', statusClass: 'badge-success', skills: ['AWS', 'Kubernetes', 'Terraform', 'Docker', 'CI/CD', 'Prometheus', 'Go'], resume: 'DevOps Engineer with a decade of experience in cloud infrastructure and platform engineering. Expert in AWS, Kubernetes, and infrastructure-as-code.' },
+      { name: 'Sara Reed', email: 'sara.reed@example.com', phone: '+91 65432 10987', role: 'Junior Developer', experience: '2 years', stage: 'Starter', stageClass: 'badge-neutral', diagnostics: 0, lastAttempt: 'Never', avatar: 'SR', avatarBg: 'bg-destructive-dim text-destructive', status: 'Churned', statusClass: 'badge-destructive', skills: ['JavaScript', 'HTML/CSS', 'React', 'Git'], resume: 'Junior developer with 2 years of experience in web development. Eager to grow skills in modern frameworks and backend technologies.' },
+      { name: 'Tom Chen', email: 'tom.chen@example.com', phone: '+91 54321 09876', role: 'Engineering Manager', experience: '12 years', stage: 'Enterprise', stageClass: 'badge-accent', diagnostics: 8, lastAttempt: '5 hours ago', avatar: 'TC', avatarBg: 'bg-accent-dim text-accent', status: 'Active', statusClass: 'badge-success', skills: ['Leadership', 'System Design', 'Java', 'Microservices', 'Team Building', 'Strategy'], resume: 'Engineering Manager with 12 years of experience leading high-performing teams. Expert in distributed systems, team scaling, and technical strategy.' },
+    ];
+
+    const jobs = [
+      { title: 'Senior Frontend Engineer', company: 'TechCorp Inc', location: 'Bangalore', experience: '6-10 years', ctc: '₹15L-25L', diagnostics: 7, completion: 75, skills: ['React', 'TypeScript', 'Next.js', 'GraphQL', 'Performance Optimization'], description: 'We are looking for a Senior Frontend Engineer to join our growing engineering team. You will lead the frontend architecture and build high-performance web applications.\n\nResponsibilities:\n• Design and implement scalable frontend architectures\n• Mentor junior developers and conduct code reviews\n• Collaborate with product and design teams\n• Optimize application performance and user experience\n• Drive technical decisions and best practices' },
+      { title: 'Product Manager', company: 'StartupXYZ', location: 'Remote', experience: '3-7 years', ctc: '₹12L-20L', diagnostics: 4, completion: 50, skills: ['Product Strategy', 'Agile', 'Data Analysis', 'User Research'], description: 'Join our product team to define and execute the product roadmap for our flagship SaaS platform.\n\nResponsibilities:\n• Define product vision and strategy\n• Conduct user research and analyze data\n• Write detailed product specifications\n• Work closely with engineering and design\n• Drive product launches and measure success' },
+      { title: 'DevOps Engineer', company: 'CloudBase', location: 'Mumbai', experience: '4-8 years', ctc: '₹10L-18L', diagnostics: 12, completion: 100, skills: ['AWS', 'Kubernetes', 'Terraform', 'CI/CD', 'Monitoring'], description: 'We need a DevOps Engineer to build and maintain our cloud infrastructure and deployment pipelines.\n\nResponsibilities:\n• Manage AWS cloud infrastructure\n• Build and optimize CI/CD pipelines\n• Implement monitoring and alerting systems\n• Ensure high availability and disaster recovery\n• Automate infrastructure provisioning with Terraform' },
+      { title: 'Junior Developer', company: 'WebAgency', location: 'Pune', experience: '0-2 years', ctc: '₹4L-8L', diagnostics: 2, completion: 25, skills: ['JavaScript', 'HTML/CSS', 'React', 'Git'], description: 'A great opportunity for fresh graduates to start their career in web development.\n\nResponsibilities:\n• Build and maintain web applications\n• Learn modern development practices\n• Participate in code reviews\n• Collaborate with senior developers\n• Write clean, maintainable code' },
+      { title: 'Engineering Manager', company: 'EnterpriseCo', location: 'Delhi', experience: '8-15 years', ctc: '₹25L-40L', diagnostics: 9, completion: 60, skills: ['Leadership', 'System Design', 'Architecture', 'Team Management'], description: 'Lead a team of engineers building enterprise-grade products at scale.\n\nResponsibilities:\n• Lead and grow a team of 15+ engineers\n• Define technical strategy and architecture\n• Drive engineering excellence and best practices\n• Collaborate with C-suite on technical vision\n• Manage cross-team dependencies and delivery' },
+    ];
+
+    const diagnostics = [
+      { job: 'Senior Frontend Engineer', company: 'TechCorp Inc', candidate: 'Alex Kim', candidateEmail: 'alex.kim@example.com', candidateAvatar: 'AK', avatarBg: 'bg-accent-dim text-accent', progress: 3, total: 4, status: 'Completed', statusClass: 'badge-success', lastActivity: '2 hours ago', paid: '₹999', paidClass: 'badge-success' },
+      { job: 'Product Manager', company: 'StartupXYZ', candidate: 'Jane Smith', candidateEmail: 'jane.smith@example.com', candidateAvatar: 'JS', avatarBg: 'bg-success-dim text-success', progress: 1, total: 4, status: 'In Progress', statusClass: 'badge-warning', lastActivity: '1 day ago', paid: 'Free', paidClass: 'badge-neutral' },
+      { job: 'DevOps Engineer', company: 'CloudBase', candidate: 'Mike Davis', candidateEmail: 'mike.davis@example.com', candidateAvatar: 'MD', avatarBg: 'bg-warning-dim text-warning', progress: 4, total: 4, status: 'Completed', statusClass: 'badge-success', lastActivity: '3 days ago', paid: '₹1499', paidClass: 'badge-success' },
+      { job: 'Junior Developer', company: 'WebAgency', candidate: 'Sara Reed', candidateEmail: 'sara.reed@example.com', candidateAvatar: 'SR', avatarBg: 'bg-destructive-dim text-destructive', progress: 0, total: 4, status: 'In Progress', statusClass: 'badge-warning', lastActivity: '5 days ago', paid: 'Free', paidClass: 'badge-neutral' },
+      { job: 'Engineering Manager', company: 'EnterpriseCo', candidate: 'Tom Chen', candidateEmail: 'tom.chen@example.com', candidateAvatar: 'TC', avatarBg: 'bg-accent-dim text-accent', progress: 2, total: 4, status: 'In Progress', statusClass: 'badge-warning', lastActivity: '5 hours ago', paid: '₹1999', paidClass: 'badge-success' },
+    ];
+
+    // ===== NAVIGATION =====
+    let currentView = 'users-list';
+
+    function navigate(view) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + view).classList.add('active');
+      currentView = view;
+
+      // Update sidebar
+      document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+      const sidebarMap = { 'users': 0, 'users-detail': 0, 'jobs': 1, 'jobs-detail': 1, 'diagnostics': 2, 'diagnostics-detail': 2 };
+      const idx = sidebarMap[view] ?? 0;
+      document.querySelectorAll('.sidebar-item')[idx]?.classList.add('active');
+    }
+
+    // ===== TABS =====
+    function switchTab(btn, prefix, name) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll(`[id^="${prefix}-"]`).forEach(tc => tc.classList.remove('active'));
+      document.getElementById(`${prefix}-${name}`).classList.add('active');
+    }
+
+    // ===== RENDER TABLES =====
+    function renderUsers() {
+      const tbody = document.getElementById('users-table-body');
+      tbody.innerHTML = users.map((u, i) => `
+        <tr class="row-click" tabindex="0" role="button" onclick="showUserDetail(${i})" onkeydown="if(event.key==='Enter')showUserDetail(${i})">
+          <td>
+            <div class="flex items-center gap-3">
+              <div class="avatar ${u.avatarBg}">${u.avatar}</div>
+              <div>
+                <div class="font-medium text-white">${u.name}</div>
+                <div class="text-xs text-muted">${u.email}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="text-faint">${u.role}</div>
+            <div class="text-xs text-muted">${u.experience}</div>
+          </td>
+          <td><span class="badge badge-accent">${u.diagnostics}</span></td>
+          <td><span class="badge ${u.stageClass}">${u.stage}</span></td>
+          <td class="text-muted">${u.lastAttempt}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderJobs() {
+      const tbody = document.getElementById('jobs-table-body');
+      tbody.innerHTML = jobs.map((j, i) => `
+        <tr class="row-click" tabindex="0" role="button" onclick="showJobDetail(${i})" onkeydown="if(event.key==='Enter')showJobDetail(${i})">
+          <td class="font-medium text-white">${j.title}</td>
+          <td>${j.company}</td>
+          <td class="text-muted">${j.location}</td>
+          <td class="text-muted">${j.experience}</td>
+          <td class="text-faint font-medium">${j.ctc}</td>
+          <td><span class="badge badge-accent">${j.diagnostics}</span></td>
+          <td>
+            <div class="flex items-center gap-2.5">
+              <div class="progress-track w-20"><div class="progress-fill" style="width:${j.completion}%"></div></div>
+              <span class="text-xs text-muted">${j.completion}%</span>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderDiagnostics() {
+      const tbody = document.getElementById('diagnostics-table-body');
+      tbody.innerHTML = diagnostics.map((d, i) => `
+        <tr class="row-click" tabindex="0" role="button" onclick="navigate('diagnostics-detail')" onkeydown="if(event.key==='Enter')navigate('diagnostics-detail')">
+          <td class="text-faint">${d.job}<div class="text-xs text-muted">${d.company}</div></td>
+          <td>
+            <div class="flex items-center gap-2.5">
+              <div class="avatar w-7 h-7 text-[10px] ${d.avatarBg}">${d.candidateAvatar}</div>
+              <div>
+                <div class="text-faint">${d.candidate}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="flex items-center gap-2.5">
+              <div class="progress-track w-16"><div class="progress-fill" style="width:${(d.progress/d.total)*100}%"></div></div>
+              <span class="text-xs text-muted">${d.progress}/${d.total}</span>
+            </div>
+          </td>
+          <td><span class="badge ${d.statusClass}">${d.status}</span></td>
+          <td class="text-muted">${d.lastActivity}</td>
+          <td><span class="badge ${d.paidClass}">${d.paid}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // ===== DETAIL VIEWS =====
+    function showUserDetail(idx) {
+      const u = users[idx];
+      document.getElementById('user-detail-avatar').className = `avatar w-12 h-12 text-lg ${u.avatarBg}`;
+      document.getElementById('user-detail-avatar').textContent = u.avatar;
+      document.getElementById('user-detail-name').textContent = u.name;
+      document.getElementById('user-detail-stage').className = `badge ${u.stageClass}`;
+      document.getElementById('user-detail-stage').textContent = u.stage;
+      document.getElementById('user-detail-email').textContent = u.email;
+      document.getElementById('user-detail-phone').textContent = u.phone;
+      document.getElementById('user-detail-role').textContent = u.role;
+      document.getElementById('user-detail-exp').textContent = u.experience;
+      document.getElementById('user-detail-diag-count').textContent = u.diagnostics + ' completed';
+      document.getElementById('user-detail-resume').textContent = u.resume;
+      document.getElementById('user-detail-free').style.display = u.stage === 'Starter' ? '' : 'none';
+      document.getElementById('user-detail-skills').innerHTML = u.skills.map(s => `<span class="skill-tag">${s}</span>`).join('');
+
+      // Reset to overview tab
+      const tabs = document.querySelectorAll('#view-users-detail .tab-btn');
+      switchTab(tabs[0], 'user-tab', 'overview');
+      navigate('users-detail');
+    }
+
+    function showJobDetail(idx) {
+      const j = jobs[idx];
+      document.getElementById('job-detail-title').textContent = j.title;
+      document.getElementById('job-detail-company').textContent = j.company;
+      document.getElementById('job-detail-location').textContent = j.location;
+      document.getElementById('job-detail-exp').textContent = j.experience;
+      document.getElementById('job-detail-ctc').textContent = j.ctc;
+      document.getElementById('job-detail-diag-count').textContent = j.diagnostics;
+      document.getElementById('job-detail-progress').style.width = j.completion + '%';
+      document.getElementById('job-detail-progress-text').textContent = j.completion + '%';
+      document.getElementById('job-detail-skills').innerHTML = j.skills.map(s => `<span class="skill-tag">${s}</span>`).join('');
+      document.getElementById('job-detail-description').textContent = j.description;
+
+      const tabs = document.querySelectorAll('#view-jobs-detail .tab-btn');
+      switchTab(tabs[0], 'job-tab', 'overview');
+      navigate('jobs-detail');
+    }
+
+    // ===== FILTERS =====
+    function filterUsers(query) {
+      const rows = document.querySelectorAll('#users-table-body tr');
+      const q = query.toLowerCase();
+      rows.forEach((row, i) => {
+        const u = users[i];
+        const match = u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q) || u.role.toLowerCase().includes(q);
+        row.style.display = match ? '' : 'none';
+      });
+    }
+
+    function filterDiagnostics(type) {
+      document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active'));
+      document.getElementById('stat-' + type).classList.add('active');
+      const rows = document.querySelectorAll('#diagnostics-table-body tr');
+      rows.forEach((row, i) => {
+        const d = diagnostics[i];
+        if (type === 'all') { row.style.display = ''; return; }
+        const match = d.status.toLowerCase().replace(' ', '-') === type;
+        row.style.display = match ? '' : 'none';
+      });
+    }
+
+    // ===== INIT =====
+    renderUsers();
+    renderJobs();
+    renderDiagnostics();
+  </script>
+</body>
+</html>
