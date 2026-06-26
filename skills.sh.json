@@ -1,0 +1,14 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Design & UI",
+      "description": "Skills for premium product UI, shadcn component polish, and AI-native workspace design.",
+      "skills": [
+        "modern-design",
+        "ai-design"
+      ]
+    }
+  ]
+}
