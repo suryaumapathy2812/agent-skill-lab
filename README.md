@@ -59,40 +59,42 @@ When talking to the `design-engineer`, use these commands:
 
 ## Installation
 
-Skills work with any major AI coding CLI. Use the universal installer for the easiest setup.
+[![skills.sh](https://skills.sh/b/suryaumapathy2812/agent-skill-lab)](https://skills.sh/suryaumapathy2812/agent-skill-lab)
 
-### Universal Installer (Recommended)
+### Quick Install (Recommended)
 
-Clone the repo, then run:
+Works with **any** agent CLI — Claude Code, Codex, Cursor, Antigravity, OpenCode, Windsurf, and more.
 
 ```bash
-git clone https://github.com/suryaumapathy/agent-skill-lab
+# Install all skills
+npx -y skills add suryaumapathy2812/agent-skill-lab
+
+# Install a single skill
+npx -y skills add suryaumapathy2812/agent-skill-lab --skill auto-iterate
+```
+
+The `npx skills` CLI auto-detects which agent you're using and installs to the right directory (`.claude/skills/`, `.agents/skills/`, `.cursor/rules/`, etc.).
+
+### Shell Installer (Fallback)
+
+If `npx skills` doesn't work for your setup, clone the repo and use the included `install.sh`:
+
+```bash
+git clone https://github.com/suryaumapathy2812/agent-skill-lab
 cd agent-skill-lab
 ./install.sh
 ```
 
-The installer auto-detects which CLIs you have installed and prompts you to choose. You can also be explicit:
+The installer auto-detects which CLIs you have and prompts you to choose:
 
 ```bash
-# Install for a specific CLI (globally)
-./install.sh --target antigravity
-./install.sh --target claude-code
-./install.sh --target opencode
-./install.sh --target codex
-./install.sh --target cursor
-./install.sh --target windsurf
-
-# Install a single skill only
-./install.sh --target claude-code --skill auto-iterate
-
-# Install into the current project directory instead of globally
-./install.sh --target cursor --project
-
-# List available skills and agents
-./install.sh --list
+./install.sh --target claude-code          # install for a specific CLI
+./install.sh --target cursor --skill auto-iterate  # one skill, project-scoped
+./install.sh --list                        # list available skills/agents
 ```
 
-### Supported CLIs & Config Paths
+<details>
+<summary>Supported CLIs & config paths</summary>
 
 | CLI | Skills | Agents | Commands |
 |-----|--------|--------|----------|
@@ -103,76 +105,34 @@ The installer auto-detects which CLIs you have installed and prompts you to choo
 | **Cursor** | `.cursor/rules/<skill>.mdc` | — | — |
 | **Windsurf** | `.windsurf/rules/<skill>.md` | — | — |
 
-> **Note:** Cursor and Windsurf are project-scoped only (rules live inside your project). For global rules in Cursor, use the Cursor Settings UI.
-
-### Manual Install (per CLI)
+</details>
 
 <details>
-<summary>Antigravity</summary>
+<summary>Manual install (per CLI)</summary>
 
+**Antigravity**
 ```bash
 mkdir -p ~/.gemini/skills/auto-iterate
 cp -R skills/auto-iterate/* ~/.gemini/skills/auto-iterate/
 ```
-</details>
 
-<details>
-<summary>OpenCode</summary>
-
+**OpenCode**
 ```bash
 mkdir -p ~/.config/opencode/skills/auto-iterate
 cp -R skills/auto-iterate/* ~/.config/opencode/skills/auto-iterate/
 ```
 
-For `modern-design` with bundled agents and commands:
-```bash
-mkdir -p ~/.config/opencode/skills/modern-design
-cp -R skills/modern-design/* ~/.config/opencode/skills/modern-design/
-cp -R references/products ~/.config/opencode/skills/modern-design/references/
-cp -R references/modern-design ~/.config/opencode/skills/modern-design/references/
-mkdir -p ~/.config/opencode/agents ~/.config/opencode/commands
-cp agents/design-*.md ~/.config/opencode/agents/
-cp agents/ux-architect.md ~/.config/opencode/agents/
-cp commands/design-*.md ~/.config/opencode/commands/
-```
-</details>
-
-<details>
-<summary>Claude Code</summary>
-
+**Claude Code**
 ```bash
 mkdir -p ~/.claude/skills/auto-iterate
 cp -R skills/auto-iterate/* ~/.claude/skills/auto-iterate/
 ```
-</details>
 
-<details>
-<summary>Codex (AGENTS.md)</summary>
-
-Codex doesn't have a native skills system. The installer appends skill content to `~/.codex/AGENTS.md`:
+**Codex** — append skill body to `~/.codex/AGENTS.md`:
 ```bash
 ./install.sh --target codex --skill auto-iterate
 ```
-</details>
 
-<details>
-<summary>Cursor</summary>
-
-The installer creates a `.mdc` rule file in `.cursor/rules/` inside your project:
-```bash
-cd /your/project
-/path/to/agent-skill-lab/install.sh --target cursor --skill auto-iterate
-```
-</details>
-
-<details>
-<summary>Windsurf</summary>
-
-The installer creates a `.md` rule file in `.windsurf/rules/` inside your project:
-```bash
-cd /your/project
-/path/to/agent-skill-lab/install.sh --target windsurf --skill auto-iterate
-```
 </details>
 
 Restart your CLI after installing skills, agents, or commands.
