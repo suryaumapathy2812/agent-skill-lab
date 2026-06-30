@@ -59,62 +59,123 @@ When talking to the `design-engineer`, use these commands:
 
 ## Installation
 
-OpenCode is the only supported runtime for this repository right now.
+Skills work with any major AI coding CLI. Use the universal installer for the easiest setup.
 
-### Install All Skills
+### Universal Installer (Recommended)
+
+Clone the repo, then run:
 
 ```bash
-npx skills add suryaumapathy/agent-skill-lab
+git clone https://github.com/suryaumapathy/agent-skill-lab
+cd agent-skill-lab
+./install.sh
 ```
 
-### Install Individual Skills Locally
+The installer auto-detects which CLIs you have installed and prompts you to choose. You can also be explicit:
 
-Use these commands when working from a local clone and you only want one skill.
+```bash
+# Install for a specific CLI (globally)
+./install.sh --target antigravity
+./install.sh --target claude-code
+./install.sh --target opencode
+./install.sh --target codex
+./install.sh --target cursor
+./install.sh --target windsurf
 
-`auto-iterate`
+# Install a single skill only
+./install.sh --target claude-code --skill auto-iterate
+
+# Install into the current project directory instead of globally
+./install.sh --target cursor --project
+
+# List available skills and agents
+./install.sh --list
+```
+
+### Supported CLIs & Config Paths
+
+| CLI | Skills | Agents | Commands |
+|-----|--------|--------|----------|
+| **Antigravity (AGY)** | `~/.gemini/skills/` or `.agents/skills/` | `~/.gemini/config/agents/` | — |
+| **OpenCode** | `~/.config/opencode/skills/` or `.opencode/skills/` | `~/.config/opencode/agents/` | `~/.config/opencode/commands/` |
+| **Claude Code** | `~/.claude/skills/` or `.claude/skills/` | `~/.claude/agents/` | `~/.claude/commands/` |
+| **Codex** | Appended to `~/.codex/AGENTS.md` | — | — |
+| **Cursor** | `.cursor/rules/<skill>.mdc` | — | — |
+| **Windsurf** | `.windsurf/rules/<skill>.md` | — | — |
+
+> **Note:** Cursor and Windsurf are project-scoped only (rules live inside your project). For global rules in Cursor, use the Cursor Settings UI.
+
+### Manual Install (per CLI)
+
+<details>
+<summary>Antigravity</summary>
+
+```bash
+mkdir -p ~/.gemini/skills/auto-iterate
+cp -R skills/auto-iterate/* ~/.gemini/skills/auto-iterate/
+```
+</details>
+
+<details>
+<summary>OpenCode</summary>
+
 ```bash
 mkdir -p ~/.config/opencode/skills/auto-iterate
 cp -R skills/auto-iterate/* ~/.config/opencode/skills/auto-iterate/
 ```
 
-`modern-design`
+For `modern-design` with bundled agents and commands:
 ```bash
 mkdir -p ~/.config/opencode/skills/modern-design
 cp -R skills/modern-design/* ~/.config/opencode/skills/modern-design/
 cp -R references/products ~/.config/opencode/skills/modern-design/references/
 cp -R references/modern-design ~/.config/opencode/skills/modern-design/references/
-```
-
-Install the bundled Design Engineer agents and commands with `modern-design`:
-
-```bash
 mkdir -p ~/.config/opencode/agents ~/.config/opencode/commands
 cp agents/design-*.md ~/.config/opencode/agents/
 cp agents/ux-architect.md ~/.config/opencode/agents/
 cp commands/design-*.md ~/.config/opencode/commands/
 ```
+</details>
 
-`ai-design`
-```bash
-mkdir -p ~/.config/opencode/skills/ai-design
-cp -R skills/ai-design/* ~/.config/opencode/skills/ai-design/
-```
-
-### Install Agents
+<details>
+<summary>Claude Code</summary>
 
 ```bash
-mkdir -p ~/.config/opencode/agents
-cp agents/*.md ~/.config/opencode/agents/
+mkdir -p ~/.claude/skills/auto-iterate
+cp -R skills/auto-iterate/* ~/.claude/skills/auto-iterate/
 ```
+</details>
 
-### Install Commands
+<details>
+<summary>Codex (AGENTS.md)</summary>
 
+Codex doesn't have a native skills system. The installer appends skill content to `~/.codex/AGENTS.md`:
 ```bash
-mkdir -p ~/.config/opencode/commands
-cp commands/*.md ~/.config/opencode/commands/
+./install.sh --target codex --skill auto-iterate
 ```
+</details>
 
-Restart OpenCode after installing skills, agents, or commands.
+<details>
+<summary>Cursor</summary>
+
+The installer creates a `.mdc` rule file in `.cursor/rules/` inside your project:
+```bash
+cd /your/project
+/path/to/agent-skill-lab/install.sh --target cursor --skill auto-iterate
+```
+</details>
+
+<details>
+<summary>Windsurf</summary>
+
+The installer creates a `.md` rule file in `.windsurf/rules/` inside your project:
+```bash
+cd /your/project
+/path/to/agent-skill-lab/install.sh --target windsurf --skill auto-iterate
+```
+</details>
+
+Restart your CLI after installing skills, agents, or commands.
 
 ## auto-iterate
 
