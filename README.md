@@ -24,10 +24,12 @@ docs/         Project documentation
 - `auto-iterate`: Autonomous iteration and benchmarking toolkit. Inspired by karpathy/autoresearcher.
 - `modern-design`: Premium product UI design system. Defines concrete tokens, layout architecture, typography, and motion for React/Tailwind/shadcn.
 - `ai-design`: AI workspace product design and AI-native product architecture.
+- `idea-sparring`: Conversational brainstorming partner. Uses Socratic questioning, untools.co-inspired mental models, and grounded reference cases to help develop and articulate raw ideas, with resumable per-idea session notes.
 
 ## Current Agents
 
 - `auto-iterator`: Autonomous iteration agent. Runs experiments, evaluates, keeps/discards. Use with the `auto-iterate` skill.
+- `thinking-partner`: Recurring brainstorming agent. Tab into it to develop and pressure-test raw ideas through Socratic questioning and mental models. Wraps the `idea-sparring` skill.
 
 **Design Engineer System (Multi-Agent Team):**
 - `design-engineer`: Lead agent. Orchestrates sub-agents, builds UI, logs decisions.
