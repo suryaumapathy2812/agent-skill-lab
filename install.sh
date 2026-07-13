@@ -202,9 +202,9 @@ list_skills() {
   done
 
   header "Available Agents"
-  for agent_file in "$REPO_DIR/agents"/*.md; do
+  for agent_file in "$REPO_DIR/agents"/*/agent.md; do
     [[ -f "$agent_file" ]] || continue
-    agent_name=$(basename "$agent_file" .md)
+    agent_name=$(basename "$(dirname "$agent_file")")
     desc=$(grep -m1 '^description:' "$agent_file" 2>/dev/null | sed -E 's/^description: *"?//; s/"?$//' | cut -c1-90)
     echo -e "  ${BOLD}${agent_name}${RESET}"
     [[ -n "$desc" ]] && echo -e "  ${YELLOW}$desc${RESET}"
@@ -324,19 +324,21 @@ install_agents() {
       mkdir -p "$agents_dir"
       if [[ -n "$agent_filter" ]]; then
         for name in $agent_filter; do
-          local f="$REPO_DIR/agents/${name}.md"
+          local f="$REPO_DIR/agents/${name}/agent.md"
           if [[ -f "$f" ]]; then
-            cp "$f" "$agents_dir/"
-            success "Installed agent: $(basename "$f") → $agents_dir"
+            cp "$f" "$agents_dir/${name}.md"
+            success "Installed agent: ${name}.md → $agents_dir"
           else
             error "Agent not found: $name"
           fi
         done
       else
-        for f in "$REPO_DIR/agents"/*.md; do
-          [[ -f "$f" && "$(basename "$f")" != ".gitkeep" ]] || continue
-          cp "$f" "$agents_dir/"
-          success "Installed agent: $(basename "$f") → $agents_dir"
+        for f in "$REPO_DIR/agents"/*/agent.md; do
+          [[ -f "$f" ]] || continue
+          local name
+          name=$(basename "$(dirname "$f")")
+          cp "$f" "$agents_dir/${name}.md"
+          success "Installed agent: ${name}.md → $agents_dir"
         done
       fi
       ;;
@@ -420,10 +422,10 @@ interactive_select_agent() {
   header "Available Agents (pick one or more, e.g. 1 or 1,3)" >&2
   local i=1
   local -a names
-  for agent_file in "$REPO_DIR/agents"/*.md; do
+  for agent_file in "$REPO_DIR/agents"/*/agent.md; do
     [[ -f "$agent_file" ]] || continue
     local name desc
-    name=$(basename "$agent_file" .md)
+    name=$(basename "$(dirname "$agent_file")")
     desc=$(grep -m1 '^description:' "$agent_file" 2>/dev/null | sed -E 's/^description: *"?//; s/"?$//' | cut -c1-90)
     echo "  [$i] $name" >&2
     [[ -n "$desc" ]] && echo "      $desc" >&2

@@ -6,13 +6,22 @@ Each skill is independent and lives at:
 
 ```txt
 skills/<skill-name>/SKILL.md
+skills/<skill-name>/README.md      Human-facing overview; links back to the root README and out to SKILL.md
+skills/<skill-name>/references/    Optional supporting reference files
 ```
 
-Skill names should be lowercase and hyphen-separated.
+Skill names should be lowercase and hyphen-separated. `SKILL.md` is the model-facing instruction file (what an agent loads); `README.md` is the human-facing summary — keep them separate rather than duplicating one into the other.
 
 ## Agents
 
-Agent definitions will live in `agents/`. Keep one agent per markdown file unless an agent requires supporting reference files.
+Each agent lives in its own directory:
+
+```txt
+agents/<agent-name>/agent.md    The actual agent definition (frontmatter + system prompt)
+agents/<agent-name>/README.md  Human-facing overview; links back to the root README
+```
+
+`install.sh` copies `agent.md` into the target CLI's agents directory, renamed to `<agent-name>.md` (the filename is what the CLI uses as the agent's identifier — `agent.md` itself is never copied verbatim). Keep one `agent.md` per agent unless it needs supporting reference files, in which case add them alongside inside the same `<agent-name>/` directory.
 
 ## Commands
 

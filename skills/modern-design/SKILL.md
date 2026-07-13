@@ -22,10 +22,10 @@ Use this skill when building new UIs or refining existing ones to achieve a high
 
 This skill is currently designed and tested as part of the OpenCode Design Engineer bundle:
 
-- `agents/design-engineer.md`
-- `agents/design-researcher.md`
-- `agents/ux-architect.md`
-- `agents/design-critic.md`
+- `agents/design-engineer/agent.md`
+- `agents/design-researcher/agent.md`
+- `agents/ux-architect/agent.md`
+- `agents/design-critic/agent.md`
 - `commands/design-*.md`
 
 The skill, agents, commands, templates, and references are intended to be installed together. Standalone use of `modern-design` without the OpenCode agents is not the primary supported path yet.
