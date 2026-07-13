@@ -79,20 +79,36 @@ The `npx skills` CLI auto-detects which agent you're using and installs to the r
 
 ### Shell Installer (Fallback)
 
-If `npx skills` doesn't work for your setup, clone the repo and use the included `install.sh`:
+No clone required — this runs the installer directly from GitHub:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/suryaumapathy2812/agent-skill-lab/main/install.sh | bash
+```
+
+This opens an interactive menu: pick **Skill**, **Agent**, or **Both** → pick which one(s) by number (e.g. `1` or `1,3` — multi-select, no "install everything" shortcut) → pick your target CLI(s) (auto-detected where possible) → pick **Global** or **Project** scope. Every step requires an explicit choice; there's no default that installs everything for you.
+
+Pass flags to skip the menu and install non-interactively (works the same whether piped or run from a local clone — when piping, args go after `bash -s --`):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/suryaumapathy2812/agent-skill-lab/main/install.sh | bash -s -- --target opencode --agent thinking-partner --project
+curl -fsSL https://raw.githubusercontent.com/suryaumapathy2812/agent-skill-lab/main/install.sh | bash -s -- --target claude-code --skill idea-sparring --global
+curl -fsSL https://raw.githubusercontent.com/suryaumapathy2812/agent-skill-lab/main/install.sh | bash -s -- --list
+
+# Explicit opt-in to install every skill and agent (there's no implicit default for this):
+curl -fsSL https://raw.githubusercontent.com/suryaumapathy2812/agent-skill-lab/main/install.sh | bash -s -- --all --target claude-code --global
+```
+
+If you'd rather work from a local clone:
 
 ```bash
 git clone https://github.com/suryaumapathy2812/agent-skill-lab
 cd agent-skill-lab
-./install.sh
-```
-
-The installer auto-detects which CLIs you have and prompts you to choose:
-
-```bash
-./install.sh --target claude-code          # install for a specific CLI
-./install.sh --target cursor --skill auto-iterate  # one skill, project-scoped
-./install.sh --list                        # list available skills/agents
+./install.sh                                       # same interactive menu
+./install.sh --target claude-code                   # target set, still asks what to install
+./install.sh --target cursor --skill auto-iterate   # one skill only, prompts for scope
+./install.sh --target opencode --agent thinking-partner --project  # one agent only
+./install.sh --all --target claude-code --global    # everything, explicitly
+./install.sh --list                                 # list available skills/agents
 ```
 
 <details>
