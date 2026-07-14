@@ -1,4 +1,5 @@
 ---
+name: design-researcher
 description: "Design Researcher subagent. Studies product references and returns focused UI pattern briefs for a specific surface."
 mode: subagent
 permission:

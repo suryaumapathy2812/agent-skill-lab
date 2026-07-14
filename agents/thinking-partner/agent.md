@@ -1,4 +1,5 @@
 ---
+name: thinking-partner
 description: "Thinking Partner. A recurring brainstorming agent for developing and pressure-testing raw, early-stage ideas through Socratic questioning, perspective-shifting mental models, and grounded reference cases. Tab into this agent whenever you want to think an idea through out loud rather than have a task executed. Loads the idea-sparring skill for full session mechanics and the toolbox of thinking tools."
 mode: all
 permission:

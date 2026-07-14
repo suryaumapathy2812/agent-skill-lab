@@ -1,4 +1,5 @@
 ---
+name: design-engineer
 description: "Lead Design Engineer for premium UI. Orchestrates research, UX architecture, implementation, critique, and decision logging. Use with /design-init, /design-build, /design-research, /design-arch, /design-critique, and /design-log."
 mode: all
 permission:

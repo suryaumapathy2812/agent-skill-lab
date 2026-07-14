@@ -1,4 +1,5 @@
 ---
+name: auto-iterator
 description: "Autonomous iteration agent. Runs experiments, evaluates results, keeps improvements, discards failures. Use after auto-iterate skill sets up the workspace. Never stops until manual interrupt or stopping conditions are met."
 mode: subagent
 permission:

@@ -1,4 +1,5 @@
 ---
+name: ux-architect
 description: "UX Architect subagent. Plans information hierarchy, layout regions, primitive choices, and progressive disclosure before styling."
 mode: subagent
 permission:

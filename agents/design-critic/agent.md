@@ -1,4 +1,5 @@
 ---
+name: design-critic
 description: "Design Critic subagent. Reviews UI implementations against DESIGN.md, modern-design hard rules, and anti-patterns; returns scored actionable critique."
 mode: subagent
 permission:
